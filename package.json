@@ -17,10 +17,9 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
@@ -53,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^6.4.5",
     "@storybook/addon-actions": "^6.5.9",
     "@storybook/addon-essentials": "^6.5.9",
     "@storybook/addon-interactions": "^6.5.9",
@@ -67,6 +67,7 @@
     "babel-plugin-named-exports-order": "^0.0.2",
     "postcss": "^8.4.14",
     "prop-types": "^15.8.1",
+    "react-app-alias": "^2.2.1",
     "storybook": "^6.5.9",
     "tailwindcss": "^3.1.6",
     "webpack": "^5.74.0"
