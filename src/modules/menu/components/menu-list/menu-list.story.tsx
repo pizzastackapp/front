@@ -1,4 +1,4 @@
-import { MenuList } from '@app/modules/menu/menu-list/menu-list.component';
+import { MenuList } from '@app/modules/menu/components/menu-list/menu-list.component';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {

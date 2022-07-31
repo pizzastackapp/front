@@ -1,4 +1,4 @@
-import { MenuItem } from '@app/modules/menu/menu-item/menu-item.component';
+import { MenuItem } from '@app/modules/menu/components/menu-item/menu-item.component';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 export default {

@@ -1,5 +1,5 @@
 import pizzaMenu from '@app/mocks/pizza.json';
-import { MenuItem } from '@app/modules/menu/menu-item/menu-item.component';
+import { MenuItem } from '@app/modules/menu/components/menu-item/menu-item.component';
 
 export const MenuList = () => {
   return (
