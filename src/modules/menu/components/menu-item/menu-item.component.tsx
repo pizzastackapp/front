@@ -21,6 +21,7 @@ export const MenuItem: FC<MenuItemProps> = ({
         <img
           className="object-cover object-center w-full h-[15rem] rounded-t-2xl"
           src={imagePath}
+          alt={title}
         />
         <span className="absolute bottom-1.5 right-3 bg-gray-900/50 text-white text-sm px-2 rounded-[2rem]">
           {weight} г
