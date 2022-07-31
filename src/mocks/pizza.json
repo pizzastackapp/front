@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "image": "manhattan.jpeg",
+    "weight": 555,
+    "title": "Піца Мангеттен",
+    "ingredients": "(подвійна порція грибів), Гриби, Моцарела, Пепероні, Соус Альфредо",
+    "price": 215
+  },
+  {
+    "id": 2,
+    "image": "pepperoni-w-tomatoes.jpeg",
+    "weight": 554,
+    "title": "Піца Пепероні з томатами",
+    "ingredients": "Моцарела, Пепероні, Помідори, Соус Барбекю",
+    "price": 215
+  },
+  {
+    "id": 3,
+    "image": "ham-w-mushrooms.jpeg",
+    "weight": 545,
+    "title": "Піца Шинка та гриби",
+    "ingredients": "Шинка, Гриби, Моцарела, Соус PizzaStack",
+    "price": 215
+  },
+  {
+    "id": 4,
+    "image": "texas.jpeg",
+    "weight": 550,
+    "title": "Піца Техас",
+    "ingredients": "Кукурудза, Цибуля, Гриби, Ковбаски баварські, Моцарела, Соус Барбекю",
+    "price": 215
+  },
+  {
+    "id": 5,
+    "image": "pepperoni.jpeg",
+    "weight": 560,
+    "title": "Піца Пепероні",
+    "ingredients": "Моцарела, Пепероні, Соус PizzaStack",
+    "price": 250
+  },
+  {
+    "id": 6,
+    "image": "margarita.jpeg",
+    "weight": 552,
+    "title": "Піца Маргаріта",
+    "ingredients": "(подвійна порція моцарели), Моцарела, Соус PizzaStack",
+    "price": 250
+  },
+  {
+    "id": 7,
+    "image": "barbecue.jpeg",
+    "weight": 552,
+    "title": "Піца Барбекю",
+    "ingredients": "Курка, Цибуля, Бекон, Гриби, Моцарела, Соус Барбекю",
+    "price": 255
+  },
+  {
+    "id": 8,
+    "image": "grill-mix.jpeg",
+    "weight": 569,
+    "title": "Піца Гриль Мікс",
+    "ingredients": "Курка, Фрикадельки, Цибуля, Бекон, Болгарський перець, Моцарела, Соус Барбекю",
+    "price": 250
+  },
+  {
+    "id": 9,
+    "image": "carbonara.jpeg",
+    "weight": 540,
+    "title": "Піца Карбонара",
+    "ingredients": "Цибуля, Бекон, Шинка, Гриби, Моцарела, Соус Альфредо",
+    "price": 250
+  }
+]
