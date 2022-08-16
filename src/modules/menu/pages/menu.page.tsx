@@ -1,19 +1,30 @@
+import { ShowInfo } from '@app/common/components/show-info/show-info.component';
 import { useGetMenuQuery } from '@app/core/types';
+import { MenuListLoading } from '@app/modules/menu/components/menu-item-list-loading/menu-item-list-loading.component';
 import { MenuList } from '@app/modules/menu/components/menu-list/menu-list.component';
 
 export const MenuPage = () => {
   const { data, loading, error } = useGetMenuQuery();
 
   if (error) {
-    return <h1>Упс, сталася помилка 🥲</h1>;
+    return (
+      <ShowInfo type="error">
+        <p>Упс, сталася помилка 🥲</p>
+        <p>Спробуйте трохи пізніше</p>
+      </ShowInfo>
+    );
   }
 
-  if (!data && loading) {
-    return <h1>Буль ласка, зачекайте...</h1>;
+  if (loading) {
+    return <MenuListLoading items={9} />;
   }
 
   if (!data) {
-    return <h1>Надаль, меню пусте нухз ☹️</h1>;
+    return (
+      <ShowInfo type="info">
+        <p>Нажаль, меню пусте ☹️</p>
+      </ShowInfo>
+    );
   }
 
   return <MenuList items={data.menu} />;
