@@ -1,0 +1,10 @@
+query GetMenu {
+  menu {
+    id
+    image
+    ingredients
+    price
+    title
+    weight
+  }
+}
