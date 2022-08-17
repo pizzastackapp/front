@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
+import { config } from '@app/core/config';
 
 export const apolloClient = new ApolloClient({
-  uri: 'http://localhost:8080/v1/graphql',
+  uri: config.hasuraEndpoint,
   cache: new InMemoryCache(),
 });
