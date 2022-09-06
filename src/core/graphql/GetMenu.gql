@@ -1,10 +1,16 @@
 query GetMenu {
-  menu {
+  categories {
     id
-    image
-    ingredients
-    price
+    slug
     title
-    weight
+    menu_items {
+      id
+      image
+      ingredients
+      price
+      title
+      weight
+      category_id
+    }
   }
 }
