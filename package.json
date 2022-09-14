@@ -37,10 +37,12 @@
     "overrides": [
       {
         "files": [
-          "**/*.stories.*"
+          "**/*.stories.*",
+          "**/*.tsx"
         ],
         "rules": {
-          "import/no-anonymous-default-export": "off"
+          "import/no-anonymous-default-export": "off",
+          "react-hooks/exhaustive-deps": "off"
         }
       }
     ]
