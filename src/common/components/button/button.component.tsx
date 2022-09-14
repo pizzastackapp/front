@@ -24,7 +24,7 @@ export const Button: FC<PropsWithChildren<ButtonProps>> = ({
   variant = ButtonVariant.primary,
 }) => {
   const buttonClasses = clsx(
-    'text-sm text-gray-900  px-4 border rounded-md transition-all',
+    'text-sm text-gray-900 px-4 border rounded-md transition-all',
     {
       'py-2': size === ButtonSize.base,
       'py-0.5': size === ButtonSize.sm,
