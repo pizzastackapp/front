@@ -3,7 +3,7 @@ import { MenuList } from '@app/modules/menu/components/menu-list/menu-list.compo
 import { FC } from 'react';
 
 interface MenuCategoryProps {
-  data: Categories;
+  data: Omit<Categories, 'menu_items_aggregate'>;
 }
 
 export const MenuCategory: FC<MenuCategoryProps> = ({ data }) => {

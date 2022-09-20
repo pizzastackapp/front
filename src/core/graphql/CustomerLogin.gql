@@ -1,0 +1,5 @@
+query CustomerLogin($phoneNumber: String!) {
+  customerLogin(input: { phoneNumber: $phoneNumber }) {
+    status
+  }
+}

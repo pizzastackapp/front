@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 
 interface HeaderProps {
   isLoading?: boolean;
-  categories?: Omit<Categories, 'menu_items'>[];
+  categories?: Omit<Categories, 'menu_items' | 'menu_items_aggregate'>[];
   isLoggedin?: boolean;
 }
 

@@ -7,6 +7,7 @@ interface InputProps {
   onBlur?: ComponentProps<'input'>['onBlur'];
   value?: ComponentProps<'input'>['value'];
   name?: ComponentProps<'input'>['name'];
+  disabled?: ComponentProps<'input'>['disabled'];
   label: string;
   placeholder: string;
   error?: string;
