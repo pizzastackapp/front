@@ -1,4 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { MemoryRouter } from 'react-router-dom';
 import { Header } from './header.component';
 
 export default {
@@ -6,7 +7,13 @@ export default {
   component: Header,
 } as ComponentMeta<typeof Header>;
 
-const Template: ComponentStory<typeof Header> = (args) => <Header {...args} />;
+const Template: ComponentStory<typeof Header> = (args) => {
+  return (
+    <MemoryRouter>
+      <Header {...args} />
+    </MemoryRouter>
+  );
+};
 
 export const View = Template.bind({});
 View.args = {

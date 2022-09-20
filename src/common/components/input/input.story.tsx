@@ -12,7 +12,6 @@ export const View = Template.bind({});
 View.args = {
   onChange: () => console.log('onChange'),
   onBlur: () => console.log('onBlur'),
-  onFocus: () => console.log('onFocus'),
   label: 'Телефон',
   placeholder: 'Телефон',
 };
@@ -21,7 +20,6 @@ export const WithError = Template.bind({});
 WithError.args = {
   onChange: () => console.log('onChange'),
   onBlur: () => console.log('onBlur'),
-  onFocus: () => console.log('onFocus'),
   label: 'Телефон',
   placeholder: 'Телефон',
   error: 'Введіть коректний номер телефону',

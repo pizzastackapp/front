@@ -1,12 +1,14 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Link } from './link.component';
+import { HeaderCategoryLink } from './link.component';
 
 export default {
   title: 'Common/Link',
-  component: Link,
-} as ComponentMeta<typeof Link>;
+  component: HeaderCategoryLink,
+} as ComponentMeta<typeof HeaderCategoryLink>;
 
-const Template: ComponentStory<typeof Link> = (args) => <Link {...args} />;
+const Template: ComponentStory<typeof HeaderCategoryLink> = (args) => (
+  <HeaderCategoryLink {...args} />
+);
 
 export const View = Template.bind({});
 View.args = {
