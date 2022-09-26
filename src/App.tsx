@@ -4,9 +4,16 @@ import { MenuPage } from '@app/modules/menu/pages/menu.page';
 import { useGetCategoriesQuery } from '@app/core/types';
 import { Route, Routes } from 'react-router-dom';
 import { LoginPage } from '@app/modules/auth/pages/login.page';
+import { useEffect } from 'react';
+import { isLoggedInReactive } from '@app/modules/auth/store/reactive-vars';
 
 export const App = () => {
   const { data, loading } = useGetCategoriesQuery();
+
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    isLoggedInReactive(Boolean(token));
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen">

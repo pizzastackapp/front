@@ -1,6 +1,7 @@
 import { ReactComponent as UserSolidIcon } from '@app/assets/icons/user-solid.svg';
 import { useOnClickOutside } from '@app/common/hooks/use-on-click-outside.hook';
 import { UserDropdownLink } from '@app/modules/auth/components/user-dropdown-link/user-dropdown-link.component';
+import { isLoggedInReactive } from '@app/modules/auth/store/reactive-vars';
 import { FC, useRef, useState } from 'react';
 
 interface UserDropdownProps {}
@@ -20,7 +21,8 @@ export const UserDropdown: FC<UserDropdownProps> = () => {
 
   const logout = () => {
     toggleDropdownState();
-    alert(123);
+    localStorage.removeItem('jwt');
+    isLoggedInReactive(false);
   };
 
   return (

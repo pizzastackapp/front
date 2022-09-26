@@ -21,7 +21,7 @@ export const ShowInfo: FC<ShowInfoProps & PropsWithChildren> = ({
 
   return (
     <div className="flex justify-center">
-      <div className="shadow-xl rounded-2xl w-64">
+      <div className="shadow rounded-2xl w-64">
         <div className={topBlockStyles}>
           {type === 'error' ? (
             <ExclamationIcon className="text-white h-12" />
