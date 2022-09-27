@@ -6,6 +6,8 @@ import { Route, Routes } from 'react-router-dom';
 import { LoginPage } from '@app/modules/auth/pages/login.page';
 import { useEffect } from 'react';
 import { isLoggedInReactive } from '@app/modules/auth/store/reactive-vars';
+import { ProfilePage } from '@app/modules/user/pages/profile.page';
+import { PrivateRoute } from '@app/common/components/private-route/private-route.component';
 
 export const App = () => {
   const { data, loading } = useGetCategoriesQuery();
@@ -22,6 +24,14 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<MenuPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </div>
       <Footer />

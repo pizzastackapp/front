@@ -2695,6 +2695,15 @@ export type GetSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetSettingsQuery = { __typename?: 'query_root', settings: Array<{ __typename?: 'settings', drinks_category?: any | null }> };
 
+export type UpdateCustomerDataMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  name?: InputMaybe<Scalars['String']>;
+  address?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type UpdateCustomerDataMutation = { __typename?: 'mutation_root', update_customers_by_pk?: { __typename?: 'customers', address?: string | null, id: any, name?: string | null, phone: string } | null };
+
 
 export const CustomerLoginDocument = gql`
     query CustomerLogin($phoneNumber: String!) {
@@ -2919,3 +2928,44 @@ export function useGetSettingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetSettingsQueryHookResult = ReturnType<typeof useGetSettingsQuery>;
 export type GetSettingsLazyQueryHookResult = ReturnType<typeof useGetSettingsLazyQuery>;
 export type GetSettingsQueryResult = Apollo.QueryResult<GetSettingsQuery, GetSettingsQueryVariables>;
+export const UpdateCustomerDataDocument = gql`
+    mutation UpdateCustomerData($id: uuid!, $name: String, $address: String) {
+  update_customers_by_pk(
+    pk_columns: {id: $id}
+    _set: {address: $address, name: $name}
+  ) {
+    address
+    id
+    name
+    phone
+  }
+}
+    `;
+export type UpdateCustomerDataMutationFn = Apollo.MutationFunction<UpdateCustomerDataMutation, UpdateCustomerDataMutationVariables>;
+
+/**
+ * __useUpdateCustomerDataMutation__
+ *
+ * To run a mutation, you first call `useUpdateCustomerDataMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateCustomerDataMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateCustomerDataMutation, { data, loading, error }] = useUpdateCustomerDataMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      name: // value for 'name'
+ *      address: // value for 'address'
+ *   },
+ * });
+ */
+export function useUpdateCustomerDataMutation(baseOptions?: Apollo.MutationHookOptions<UpdateCustomerDataMutation, UpdateCustomerDataMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateCustomerDataMutation, UpdateCustomerDataMutationVariables>(UpdateCustomerDataDocument, options);
+      }
+export type UpdateCustomerDataMutationHookResult = ReturnType<typeof useUpdateCustomerDataMutation>;
+export type UpdateCustomerDataMutationResult = Apollo.MutationResult<UpdateCustomerDataMutation>;
+export type UpdateCustomerDataMutationOptions = Apollo.BaseMutationOptions<UpdateCustomerDataMutation, UpdateCustomerDataMutationVariables>;

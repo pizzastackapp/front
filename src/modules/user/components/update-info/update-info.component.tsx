@@ -4,11 +4,26 @@ import { Button } from '@app/common/components/button/button.component';
 import { Input } from '@app/common/components/input/input.component';
 import { UpdateInfoProps } from '@app/modules/user/components/update-info/update-info.types';
 import { useUpdateInfoForm } from '@app/modules/user/components/update-info/use-update-info-form';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 
-export const UpdateInfo: FC<UpdateInfoProps> = () => {
-  const { onSubmit, isSubmitting, control } = useUpdateInfoForm();
+export const UpdateInfo: FC<UpdateInfoProps> = ({
+  initialValues,
+  onSubmitCallback,
+  isUpdating,
+}) => {
+  const { onSubmit, isSubmitting, control, reset } = useUpdateInfoForm(
+    initialValues,
+    onSubmitCallback
+  );
+  useEffect(() => {
+    if (!isUpdating) {
+      reset({
+        name: initialValues?.name ?? '',
+        address: initialValues?.address ?? '',
+      });
+    }
+  }, [initialValues, isUpdating]);
 
   const actionPaperFooter = (
     <ActionPaperFooter>
@@ -32,6 +47,7 @@ export const UpdateInfo: FC<UpdateInfoProps> = () => {
                 label="Телефон"
                 placeholder="Введіть телефон"
                 fullWidth
+                disabled
               />
             )}
           />

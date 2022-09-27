@@ -1,7 +1,9 @@
 import { min3Symbols, phoneRegexp } from '@app/common/utils/regex';
+import { Customers } from '@app/core/types';
 import { UpdateInfoFormValues } from '@app/modules/user/components/update-info/update-info.types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 
 const validationSchema = yup.object({
@@ -20,20 +22,36 @@ const validationSchema = yup.object({
   }),
 });
 
-export const useUpdateInfoForm = () => {
+export const useUpdateInfoForm = (
+  initialValues?: Customers,
+  onSubmitCallback?: (values: UpdateInfoFormValues) => Promise<void>
+) => {
   const {
     control,
     formState: { isSubmitting },
     handleSubmit,
+    reset,
   } = useForm<UpdateInfoFormValues>({
     resolver: yupResolver(validationSchema),
+    defaultValues: {
+      phoneNumber: initialValues?.phone,
+      name: initialValues?.name || '',
+      address: initialValues?.address || '',
+    },
   });
 
-  const submitForm = (values: UpdateInfoFormValues) => {
-    alert(JSON.stringify(values));
+  const submitForm = async (values: UpdateInfoFormValues) => {
+    if (onSubmitCallback) {
+      try {
+        await onSubmitCallback(values);
+        toast.success('Дані оновлені!');
+      } catch (e) {
+        toast.error((e as Error).message);
+      }
+    }
   };
 
   const onSubmit = handleSubmit(submitForm);
 
-  return { onSubmit, isSubmitting, control };
+  return { onSubmit, isSubmitting, control, reset };
 };
