@@ -7,6 +7,7 @@ import { UserDropdown } from '@app/modules/auth/components/user-dropdown/user-dr
 import { isLoggedInReactive } from '@app/modules/auth/store/reactive-vars';
 import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { ReactComponent as ShoppingCartSolidIcon } from '@app/assets/icons/shopping-cart-solid.svg';
 
 interface HeaderProps {
   isLoading?: boolean;
@@ -52,7 +53,10 @@ export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
           </>
         )}
       </div>
-      <div>
+      <div className="flex items-center gap-3">
+        <button>
+          <ShoppingCartSolidIcon className="w-6 h-6 child-path:fill-gray-900" />
+        </button>
         {isLoggedin ? (
           <UserDropdown />
         ) : (
