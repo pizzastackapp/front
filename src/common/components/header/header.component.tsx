@@ -22,7 +22,7 @@ export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
   const isLoginPage = location.pathname === '/login';
 
   return (
-    <div className="h-12 shadow px-6 mb-12 fixed w-full z-10 bg-white flex justify-between items-center">
+    <div className="h-12 shadow px-6 mb-12 fixed w-full z-20 bg-white flex justify-between items-center">
       <div className="flex items-center h-full gap-3">
         <Link to="/" className="text-xl font-semibold">
           🍕 PizzaStack
