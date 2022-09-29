@@ -1,7 +1,8 @@
 import { FC } from 'react';
-import { cloudinary } from '@app/core/cloudinary';
 import { AdvancedImage } from '@cloudinary/react';
 import clsx from 'clsx';
+import { useCloudinaryImage } from '@app/common/hooks/use-cloudinary-image.hook';
+import { Button } from '@app/common/components/button/button.component';
 
 interface MenuItemProps {
   image: string;
@@ -20,13 +21,12 @@ export const MenuItem: FC<MenuItemProps> = ({
   price,
   fitImage = false,
 }) => {
-  const imageCld = cloudinary.image(image);
-
-  const transfomations = ['w_384', 'h_240', 'dpr_2.0'];
+  const transfomations = ['w_384', 'h_240'];
   if (fitImage) {
     transfomations.unshift('c_pad');
   }
-  imageCld.addTransformation(transfomations.join(','));
+
+  const imageCld = useCloudinaryImage(image, transfomations);
 
   const titleClasses = clsx('text-xl font-semibold', {
     'mb-2': ingredients,
@@ -51,7 +51,10 @@ export const MenuItem: FC<MenuItemProps> = ({
       <div className="p-8">
         <h2 className={titleClasses}>{title}</h2>
         {ingredients && <p className="mb-8">{ingredients}</p>}
-        <span className="text-xl font-semibold">{price} грн.</span>
+        <div className="flex justify-between items-center">
+          <span className="text-xl font-semibold">{price} грн.</span>
+          <Button>Додати до корзини</Button>
+        </div>
       </div>
     </div>
   );
