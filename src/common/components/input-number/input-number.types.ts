@@ -1,8 +1,8 @@
 import { ComponentProps } from 'react';
 
 export enum InputNumberSize {
-  s = 's',
-  m = 'm',
+  sm = 'sm',
+  base = 'base',
 }
 
 export interface InputNumberProps {
@@ -12,9 +12,10 @@ export interface InputNumberProps {
   name?: ComponentProps<'input'>['name'];
   disabled?: ComponentProps<'input'>['disabled'];
   label: string;
-  placeholder: string;
+  placeholder?: string;
   error?: string;
   fullWidth?: boolean;
   setValue?: (value: number) => void;
   size?: keyof typeof InputNumberSize;
+  hideErrorMessage?: boolean;
 }
