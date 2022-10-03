@@ -55,9 +55,11 @@ export const MenuItem: FC<MenuItemProps> = ({
           </span>
         )}
       </div>
-      <div className="p-8">
-        <h2 className={titleClasses}>{title}</h2>
-        {ingredients && <p className="mb-8">{ingredients}</p>}
+      <div className="p-8 flex flex-col justify-between h-[calc(100%_-_15rem)]">
+        <div>
+          <h2 className={titleClasses}>{title}</h2>
+          {ingredients && <p className="mb-8">{ingredients}</p>}
+        </div>
         <div className="flex justify-between items-center">
           <span className="text-xl font-semibold">{price} грн.</span>
           <Button onClick={handleAddToCart}>Додати до корзини</Button>
