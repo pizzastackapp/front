@@ -11,6 +11,7 @@ export interface InputNumberProps {
   value?: number;
   name?: ComponentProps<'input'>['name'];
   disabled?: ComponentProps<'input'>['disabled'];
+  readOnly?: ComponentProps<'input'>['readOnly'];
   label: string;
   placeholder?: string;
   error?: string;

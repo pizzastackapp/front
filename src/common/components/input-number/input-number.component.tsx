@@ -82,7 +82,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
             className={inputClasses}
             ref={ref}
             type="number"
-            value={value}
+            value={value ?? 0}
             onFocus={handleFocus}
             onBlur={handleBlur}
             {...props}
