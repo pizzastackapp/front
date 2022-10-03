@@ -12,13 +12,14 @@ import clsx from 'clsx';
 import { useOnClickOutside } from '@app/common/hooks/use-on-click-outside.hook';
 import { cartState } from '@app/modules/cart/store/cart-state';
 import { useGetMenuItemsForCartQuery } from '@app/core/types';
+import { CartItemListLoading } from '@app/modules/cart/components/cart-item-list-loading/cart-item-list-loading.component';
 
 interface CartSidebarProps {}
 
 export const CartSidebar: FC<CartSidebarProps> = () => {
   const isOpened = useReactiveVar(cartOpenedState);
   const cartItems = useReactiveVar(cartState);
-  const { data, previousData } = useGetMenuItemsForCartQuery({
+  const { data, previousData, loading } = useGetMenuItemsForCartQuery({
     variables: {
       menuIds: Object.keys(cartItems),
     },
@@ -60,6 +61,8 @@ export const CartSidebar: FC<CartSidebarProps> = () => {
             </span>
           </div>
         </div>
+      ) : !data && !previousData && loading ? (
+        <CartItemListLoading amount={2} />
       ) : (
         <div className="flex gap-6 flex-col h-[calc(100%_-_3.25rem)]">
           <div className="flex gap-6 flex-col overflow-y-auto">
