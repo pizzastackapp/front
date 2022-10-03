@@ -10,6 +10,7 @@ import {
 } from '@app/modules/cart/store/cart-opened-state';
 import clsx from 'clsx';
 import { useOnClickOutside } from '@app/common/hooks/use-on-click-outside.hook';
+import { cartState } from '@app/modules/cart/store/cart-state';
 
 interface CartSidebarProps {
   items: any[];
@@ -17,6 +18,11 @@ interface CartSidebarProps {
 
 export const CartSidebar: FC<CartSidebarProps> = ({ items }) => {
   const isOpened = useReactiveVar(cartOpenedState);
+  const cartItems = useReactiveVar(cartState);
+  console.log(
+    '🚀 ~ file: cart-sidebar.component.tsx ~ line 22 ~ cartItems',
+    cartItems
+  );
 
   const cartClasses = clsx(
     'w-112 h-[calc(100vh_-_3rem)] p-6 shadow-xl fixed z-10 bg-white right-0 top-12 transition-all',
