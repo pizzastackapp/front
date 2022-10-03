@@ -8,6 +8,7 @@ import { isLoggedInReactive } from '@app/modules/auth/store/reactive-vars';
 import { FC } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as ShoppingCartSolidIcon } from '@app/assets/icons/shopping-cart-solid.svg';
+import { toggleCart } from '@app/modules/cart/store/cart-opened-state';
 
 interface HeaderProps {
   isLoading?: boolean;
@@ -29,7 +30,7 @@ export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
         </Link>
         {isLoading ? (
           <>
-            <div className="h-full w-px bg-gray-200 h-6" />
+            <div className="w-px bg-gray-200 h-6" />
             <Skeleton width={34} height={19} />
             <Skeleton width={34} height={19} />
             <Skeleton width={34} height={19} />
@@ -39,7 +40,7 @@ export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
           <>
             {isHomePage && (
               <>
-                <div className="h-full w-px bg-gray-200 h-6" />
+                <div className="w-px bg-gray-200 h-6" />
                 {categories?.map((category) => (
                   <HeaderCategoryLink
                     url={`#${category.slug}`}
@@ -54,7 +55,7 @@ export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
         )}
       </div>
       <div className="flex items-center gap-3">
-        <button>
+        <button onClick={toggleCart}>
           <ShoppingCartSolidIcon className="w-6 h-6 child-path:fill-gray-900" />
         </button>
         {isLoggedin ? (
