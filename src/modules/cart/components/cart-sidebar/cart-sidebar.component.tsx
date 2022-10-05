@@ -1,7 +1,6 @@
 import { FC, useRef } from 'react';
 import { ReactComponent as XMarkSolidIcon } from '@app/assets/icons/x-mark-solid.svg';
 import { ReactComponent as PizzaIcon } from '@app/assets/icons/pizza.svg';
-import { CartItem } from '@app/modules/cart/components/cart-item/cart-item.component';
 import { Button } from '@app/common/components/button/button.component';
 import { useReactiveVar } from '@apollo/client';
 import {
@@ -11,19 +10,14 @@ import {
 import clsx from 'clsx';
 import { useOnClickOutside } from '@app/common/hooks/use-on-click-outside.hook';
 import { cartState } from '@app/modules/cart/store/cart-state';
-import { useGetMenuItemsForCartQuery } from '@app/core/types';
-import { CartItemListLoading } from '@app/modules/cart/components/cart-item-list-loading/cart-item-list-loading.component';
+import { CartList } from '@app/modules/cart/components/cart-list/cart-list.component';
+import { Link } from 'react-router-dom';
 
 interface CartSidebarProps {}
 
 export const CartSidebar: FC<CartSidebarProps> = () => {
   const isOpened = useReactiveVar(cartOpenedState);
   const cartItems = useReactiveVar(cartState);
-  const { data, previousData, loading } = useGetMenuItemsForCartQuery({
-    variables: {
-      menuIds: Object.keys(cartItems),
-    },
-  });
 
   const cartClasses = clsx(
     'w-112 h-[calc(100vh_-_3rem)] p-6 shadow-xl fixed z-10 bg-white right-0 top-12 transition-all',
@@ -33,16 +27,21 @@ export const CartSidebar: FC<CartSidebarProps> = () => {
   );
 
   const cartRef = useRef<HTMLDivElement>(null);
-  useOnClickOutside(cartRef, () => {
-    if (isOpened) {
+  useOnClickOutside(cartRef, (event) => {
+    const path = event.composedPath();
+    const isCartButton = path.find(
+      // @ts-ignore
+      (el) => el.id === 'shopping-cart-item'
+    );
+
+    if (!isCartButton && isOpened) {
       closeCart();
     }
   });
 
-  const cartSum =
-    data?.menu.reduce((acc, val) => {
-      return acc + val.price * cartItems[val.id];
-    }, 0) ?? 0;
+  const handleCheckoutClick = () => {
+    closeCart();
+  };
 
   return (
     <div className={cartClasses} ref={cartRef}>
@@ -61,25 +60,18 @@ export const CartSidebar: FC<CartSidebarProps> = () => {
             </span>
           </div>
         </div>
-      ) : !data && !previousData && loading ? (
-        <CartItemListLoading amount={2} />
       ) : (
-        <div className="flex gap-6 flex-col h-[calc(100%_-_3.25rem)]">
-          <div className="flex gap-6 flex-col overflow-y-auto">
-            {(data || previousData)?.menu.map((item) => (
-              <CartItem
-                {...item}
-                count={cartItems[item.id]}
-                menuItemId={item.id}
-                key={`cart-item-${item.id}`}
-              />
-            ))}
-          </div>
-          <div className="border-t border-gray-200 pt-6 text-right text-sm font-medium text-gray-900">
-            Усього: {cartSum} грн
-          </div>
-          <Button>Оформити замовлення</Button>
-        </div>
+        <CartList
+          appendix={
+            <>
+              <Link to="checkout">
+                <Button fullWidth onClick={handleCheckoutClick}>
+                  Оформити замовлення
+                </Button>
+              </Link>
+            </>
+          }
+        />
       )}
     </div>
   );
