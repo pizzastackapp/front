@@ -1,3 +1,4 @@
+import { Container } from '@app/common/components/container/container.component';
 import { useUpdateCustomerDataMutation } from '@app/core/types';
 import { useGetMeDataQuery } from '@app/modules/auth/hooks/use-get-customer-data-query';
 import { UpdateInfoLoading } from '@app/modules/user/components/update-info-loading/update-info-loading.component';
@@ -9,13 +10,11 @@ export const ProfilePage = () => {
   const [updateCustomerData, { loading: isProfileUpdating }] =
     useUpdateCustomerDataMutation();
 
-  const containerClasses = 'max-w-5xl mx-auto';
-
   if (profileDataLoading) {
     return (
-      <div className={containerClasses}>
+      <Container>
         <UpdateInfoLoading />
-      </div>
+      </Container>
     );
   }
 
@@ -30,12 +29,12 @@ export const ProfilePage = () => {
   };
 
   return (
-    <div className={containerClasses}>
+    <Container>
       <UpdateInfo
         initialValues={data}
         onSubmitCallback={onSubmitCallback}
         isUpdating={isProfileUpdating}
       />
-    </div>
+    </Container>
   );
 };

@@ -9,6 +9,7 @@ import { isLoggedInReactive } from '@app/modules/auth/store/reactive-vars';
 import { ProfilePage } from '@app/modules/user/pages/profile.page';
 import { PrivateRoute } from '@app/common/components/private-route/private-route.component';
 import { CartSidebar } from '@app/modules/cart/components/cart-sidebar/cart-sidebar.component';
+import { CheckoutPage } from '@app/modules/checkout/pages/checkout.page';
 
 export const App = () => {
   const { data, loading } = useGetCategoriesQuery();
@@ -34,6 +35,7 @@ export const App = () => {
               </PrivateRoute>
             }
           />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Routes>
       </div>
       <Footer />
