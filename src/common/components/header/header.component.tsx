@@ -21,6 +21,7 @@ export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
   const isLoginPage = location.pathname === '/login';
+  const isCheckoutPage = location.pathname === '/checkout';
 
   return (
     <div className="h-12 shadow px-6 mb-12 fixed w-full z-20 bg-white flex justify-between items-center">
@@ -55,9 +56,11 @@ export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
         )}
       </div>
       <div className="flex items-center gap-3">
-        <button onClick={toggleCart}>
-          <ShoppingCartSolidIcon className="w-6 h-6 child-path:fill-gray-900" />
-        </button>
+        {!isCheckoutPage && (
+          <button onClick={toggleCart} id="shopping-cart-item">
+            <ShoppingCartSolidIcon className="w-6 h-6 child-path:fill-gray-900" />
+          </button>
+        )}
         {isLoggedin ? (
           <UserDropdown />
         ) : (
