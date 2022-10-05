@@ -40,7 +40,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {label}
         </label>
         <div className={inputWrapperClasses}>
-          <input id={inputId} className={inputClasses} ref={ref} {...props} />
+          <input id={inputId} className={inputClasses} {...props} />
           {error && (
             <ExclamationCircleSolid className="h-4 w-4 absolute right-3 top-2.75 child-path:fill-red-500" />
           )}
