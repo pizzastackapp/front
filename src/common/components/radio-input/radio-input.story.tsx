@@ -15,4 +15,5 @@ View.args = {
   value: 'cash',
   label: 'Готівка',
   name: 'payment',
+  defaultChecked: false,
 };

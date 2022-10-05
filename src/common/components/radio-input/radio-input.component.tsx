@@ -4,6 +4,8 @@ interface RadioInputProps {
   value: ComponentProps<'input'>['value'];
   label: string;
   name: string;
+  defaultChecked?: ComponentProps<'input'>['defaultChecked'];
+  onChange?: ComponentProps<'input'>['onChange'];
 }
 
 export const RadioInput: FC<RadioInputProps> = ({ label, ...props }) => {
