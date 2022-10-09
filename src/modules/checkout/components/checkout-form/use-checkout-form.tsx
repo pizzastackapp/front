@@ -1,4 +1,5 @@
 import { phoneRegexp } from '@app/common/utils/regex';
+import { Payment_Types_Enum } from '@app/core/types';
 import {
   CheckoutFormValues,
   UseCheckoutFormOptions,
@@ -6,6 +7,7 @@ import {
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
 
 const validation = yup.object({
   name: yup.string().required('Поле обовʼязкове!'),
@@ -16,28 +18,35 @@ const validation = yup.object({
     .required('Введіть номер телефону'),
   address: yup.string().required('Поле обовʼязкове!'),
   comment: yup.string().notRequired(),
-  paymentType: yup.string().oneOf(['card', 'cash']),
+  paymentType: yup
+    .string()
+    .oneOf([Payment_Types_Enum.Card, Payment_Types_Enum.Cash]),
 });
 
 export const useCheckoutForm = (options?: UseCheckoutFormOptions) => {
-  const { control, handleSubmit } = useForm<CheckoutFormValues>({
+  const { control, handleSubmit, reset } = useForm<CheckoutFormValues>({
     resolver: yupResolver(validation),
     defaultValues: {
       name: '',
       phoneNumber: '',
       address: '',
       comment: '',
-      paymentType: 'cash',
+      paymentType: Payment_Types_Enum.Cash,
     },
   });
 
   const submitForm = async (values: CheckoutFormValues) => {
     if (options?.callback) {
-      await options.callback(values);
+      try {
+        await options.callback(values);
+        toast.success('Замовлення створене!');
+      } catch (e) {
+        toast.error((e as Error).message);
+      }
     }
   };
 
   const onSubmit = handleSubmit(submitForm);
 
-  return { control, onSubmit };
+  return { control, onSubmit, reset };
 };

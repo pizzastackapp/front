@@ -1,7 +1,7 @@
-import { Customers } from '@app/core/types';
+import { FrontCustomer } from '@app/modules/user/types/user';
 
 export interface UpdateInfoProps {
-  initialValues?: Customers;
+  initialValues?: FrontCustomer;
   onSubmitCallback?: (values: UpdateInfoFormValues) => Promise<void>;
   isUpdating?: boolean;
 }

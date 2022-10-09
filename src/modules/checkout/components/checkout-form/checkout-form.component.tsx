@@ -2,18 +2,31 @@ import { Button } from '@app/common/components/button/button.component';
 import { Input } from '@app/common/components/input/input.component';
 import { RadioGroup } from '@app/common/components/radio-group/radio-group.component';
 import { TextArea } from '@app/common/components/text-area/text-area.component';
+import { Payment_Types_Enum } from '@app/core/types';
 import { CheckoutFormProps } from '@app/modules/checkout/components/checkout-form/checkout-form.types';
 import { useCheckoutForm } from '@app/modules/checkout/components/checkout-form/use-checkout-form';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Controller } from 'react-hook-form';
 
 const paymentTypeOptions = [
-  { label: 'Готівка', value: 'cash' },
-  { label: 'Картка', value: 'card' },
+  { label: 'Готівка', value: Payment_Types_Enum.Cash },
+  { label: 'Картка', value: Payment_Types_Enum.Card },
 ];
 
-export const CheckoutForm: FC<CheckoutFormProps> = () => {
-  const { control, onSubmit } = useCheckoutForm();
+export const CheckoutForm: FC<CheckoutFormProps> = ({
+  submitCallback,
+  initialValues,
+}) => {
+  const { control, onSubmit, reset } = useCheckoutForm({
+    callback: submitCallback,
+  });
+  useEffect(() => {
+    reset({
+      name: initialValues?.name ?? '',
+      address: initialValues?.address ?? '',
+      phoneNumber: initialValues?.phone ?? '',
+    });
+  }, [initialValues]);
 
   return (
     <form className="flex flex-col gap-2" onSubmit={onSubmit}>

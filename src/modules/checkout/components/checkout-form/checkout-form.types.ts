@@ -1,4 +1,9 @@
-export interface CheckoutFormProps {}
+import { FrontCustomer } from '@app/modules/user/types/user';
+
+export interface CheckoutFormProps {
+  submitCallback?: (values: CheckoutFormValues) => Promise<void>;
+  initialValues?: FrontCustomer;
+}
 
 export interface CheckoutFormValues {
   name: string;

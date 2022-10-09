@@ -55,6 +55,20 @@ export type CloudinarySignatureOutput = {
   timestamp: Scalars['Int'];
 };
 
+export type CreateOrderInput = {
+  client_address: Scalars['String'];
+  client_name: Scalars['String'];
+  client_phone: Scalars['String'];
+  comment?: InputMaybe<Scalars['String']>;
+  items: Scalars['String'];
+  payment_type?: InputMaybe<Scalars['String']>;
+};
+
+export type CreateOrderOutput = {
+  __typename?: 'CreateOrderOutput';
+  id: Scalars['String'];
+};
+
 export type CustomerLoginInput = {
   phoneNumber: Scalars['String'];
 };
@@ -410,8 +424,32 @@ export type Customers = {
   address?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
   name?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  orders: Array<Orders>;
+  /** An aggregate relationship */
+  orders_aggregate: Orders_Aggregate;
   phone: Scalars['String'];
   twilioVerificationSid?: Maybe<Scalars['String']>;
+};
+
+
+/** columns and relationships of "customers" */
+export type CustomersOrdersArgs = {
+  distinct_on?: InputMaybe<Array<Orders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Orders_Order_By>>;
+  where?: InputMaybe<Orders_Bool_Exp>;
+};
+
+
+/** columns and relationships of "customers" */
+export type CustomersOrders_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Orders_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Orders_Order_By>>;
+  where?: InputMaybe<Orders_Bool_Exp>;
 };
 
 /** aggregated selection of "customers" */
@@ -444,6 +482,7 @@ export type Customers_Bool_Exp = {
   address?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   name?: InputMaybe<String_Comparison_Exp>;
+  orders?: InputMaybe<Orders_Bool_Exp>;
   phone?: InputMaybe<String_Comparison_Exp>;
   twilioVerificationSid?: InputMaybe<String_Comparison_Exp>;
 };
@@ -461,6 +500,7 @@ export type Customers_Insert_Input = {
   address?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
   name?: InputMaybe<Scalars['String']>;
+  orders?: InputMaybe<Orders_Arr_Rel_Insert_Input>;
   phone?: InputMaybe<Scalars['String']>;
   twilioVerificationSid?: InputMaybe<Scalars['String']>;
 };
@@ -494,6 +534,13 @@ export type Customers_Mutation_Response = {
   returning: Array<Customers>;
 };
 
+/** input type for inserting object relation for remote table "customers" */
+export type Customers_Obj_Rel_Insert_Input = {
+  data: Customers_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Customers_On_Conflict>;
+};
+
 /** on_conflict condition type for table "customers" */
 export type Customers_On_Conflict = {
   constraint: Customers_Constraint;
@@ -506,6 +553,7 @@ export type Customers_Order_By = {
   address?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   name?: InputMaybe<Order_By>;
+  orders_aggregate?: InputMaybe<Orders_Aggregate_Order_By>;
   phone?: InputMaybe<Order_By>;
   twilioVerificationSid?: InputMaybe<Order_By>;
 };
@@ -1049,6 +1097,7 @@ export type Mutation_Root = {
   __typename?: 'mutation_root';
   /** Admin registration */
   adminRegister?: Maybe<AdminRegisterOutput>;
+  createOrder?: Maybe<CreateOrderOutput>;
   /** delete data from the table: "admin" */
   delete_admin?: Maybe<Admin_Mutation_Response>;
   /** delete single row from the table: "admin" */
@@ -1077,6 +1126,10 @@ export type Mutation_Root = {
   delete_orders_menu?: Maybe<Orders_Menu_Mutation_Response>;
   /** delete single row from the table: "orders_menu" */
   delete_orders_menu_by_pk?: Maybe<Orders_Menu>;
+  /** delete data from the table: "payment_types" */
+  delete_payment_types?: Maybe<Payment_Types_Mutation_Response>;
+  /** delete single row from the table: "payment_types" */
+  delete_payment_types_by_pk?: Maybe<Payment_Types>;
   /** delete data from the table: "settings" */
   delete_settings?: Maybe<Settings_Mutation_Response>;
   /** delete single row from the table: "settings" */
@@ -1109,6 +1162,10 @@ export type Mutation_Root = {
   insert_orders_menu_one?: Maybe<Orders_Menu>;
   /** insert a single row into the table: "orders" */
   insert_orders_one?: Maybe<Orders>;
+  /** insert data into the table: "payment_types" */
+  insert_payment_types?: Maybe<Payment_Types_Mutation_Response>;
+  /** insert a single row into the table: "payment_types" */
+  insert_payment_types_one?: Maybe<Payment_Types>;
   /** insert data into the table: "settings" */
   insert_settings?: Maybe<Settings_Mutation_Response>;
   /** insert a single row into the table: "settings" */
@@ -1141,6 +1198,10 @@ export type Mutation_Root = {
   update_orders_menu?: Maybe<Orders_Menu_Mutation_Response>;
   /** update single row of the table: "orders_menu" */
   update_orders_menu_by_pk?: Maybe<Orders_Menu>;
+  /** update data of the table: "payment_types" */
+  update_payment_types?: Maybe<Payment_Types_Mutation_Response>;
+  /** update single row of the table: "payment_types" */
+  update_payment_types_by_pk?: Maybe<Payment_Types>;
   /** update data of the table: "settings" */
   update_settings?: Maybe<Settings_Mutation_Response>;
   /** update single row of the table: "settings" */
@@ -1151,6 +1212,12 @@ export type Mutation_Root = {
 /** mutation root */
 export type Mutation_RootAdminRegisterArgs = {
   admin: AdminRegisterInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateOrderArgs = {
+  order: CreateOrderInput;
 };
 
 
@@ -1235,6 +1302,18 @@ export type Mutation_RootDelete_Orders_MenuArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Orders_Menu_By_PkArgs = {
   id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Payment_TypesArgs = {
+  where: Payment_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Payment_Types_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -1349,6 +1428,20 @@ export type Mutation_RootInsert_Orders_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Payment_TypesArgs = {
+  objects: Array<Payment_Types_Insert_Input>;
+  on_conflict?: InputMaybe<Payment_Types_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Payment_Types_OneArgs = {
+  object: Payment_Types_Insert_Input;
+  on_conflict?: InputMaybe<Payment_Types_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_SettingsArgs = {
   objects: Array<Settings_Insert_Input>;
   on_conflict?: InputMaybe<Settings_On_Conflict>;
@@ -1450,6 +1543,7 @@ export type Mutation_RootUpdate_Orders_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Orders_MenuArgs = {
+  _inc?: InputMaybe<Orders_Menu_Inc_Input>;
   _set?: InputMaybe<Orders_Menu_Set_Input>;
   where: Orders_Menu_Bool_Exp;
 };
@@ -1457,8 +1551,23 @@ export type Mutation_RootUpdate_Orders_MenuArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Orders_Menu_By_PkArgs = {
+  _inc?: InputMaybe<Orders_Menu_Inc_Input>;
   _set?: InputMaybe<Orders_Menu_Set_Input>;
   pk_columns: Orders_Menu_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Payment_TypesArgs = {
+  _set?: InputMaybe<Payment_Types_Set_Input>;
+  where: Payment_Types_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Payment_Types_By_PkArgs = {
+  _set?: InputMaybe<Payment_Types_Set_Input>;
+  pk_columns: Payment_Types_Pk_Columns_Input;
 };
 
 
@@ -1645,12 +1754,16 @@ export type Orders = {
   client_address: Scalars['String'];
   client_name: Scalars['String'];
   client_phone: Scalars['String'];
+  comment?: Maybe<Scalars['String']>;
   created_at: Scalars['timestamptz'];
+  /** An object relationship */
+  customer?: Maybe<Customers>;
   id: Scalars['uuid'];
   /** An array relationship */
   order_items: Array<Orders_Menu>;
   /** An aggregate relationship */
   order_items_aggregate: Orders_Menu_Aggregate;
+  payment_type: Payment_Types_Enum;
   status: Order_Status_Enum;
   /** A computed field, executes function "sum_by_order" */
   sum?: Maybe<Scalars['numeric']>;
@@ -1698,6 +1811,20 @@ export type Orders_Aggregate_FieldsCountArgs = {
   distinct?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "orders" */
+export type Orders_Aggregate_Order_By = {
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<Orders_Max_Order_By>;
+  min?: InputMaybe<Orders_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "orders" */
+export type Orders_Arr_Rel_Insert_Input = {
+  data: Array<Orders_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Orders_On_Conflict>;
+};
+
 /** Boolean expression to filter rows from the table "orders". All fields are combined with a logical 'AND'. */
 export type Orders_Bool_Exp = {
   _and?: InputMaybe<Array<Orders_Bool_Exp>>;
@@ -1706,9 +1833,12 @@ export type Orders_Bool_Exp = {
   client_address?: InputMaybe<String_Comparison_Exp>;
   client_name?: InputMaybe<String_Comparison_Exp>;
   client_phone?: InputMaybe<String_Comparison_Exp>;
+  comment?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  customer?: InputMaybe<Customers_Bool_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   order_items?: InputMaybe<Orders_Menu_Bool_Exp>;
+  payment_type?: InputMaybe<Payment_Types_Enum_Comparison_Exp>;
   status?: InputMaybe<Order_Status_Enum_Comparison_Exp>;
   sum?: InputMaybe<Numeric_Comparison_Exp>;
 };
@@ -1724,9 +1854,12 @@ export type Orders_Insert_Input = {
   client_address?: InputMaybe<Scalars['String']>;
   client_name?: InputMaybe<Scalars['String']>;
   client_phone?: InputMaybe<Scalars['String']>;
+  comment?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
+  customer?: InputMaybe<Customers_Obj_Rel_Insert_Input>;
   id?: InputMaybe<Scalars['uuid']>;
   order_items?: InputMaybe<Orders_Menu_Arr_Rel_Insert_Input>;
+  payment_type?: InputMaybe<Payment_Types_Enum>;
   status?: InputMaybe<Order_Status_Enum>;
 };
 
@@ -1736,13 +1869,25 @@ export type Orders_Max_Fields = {
   client_address?: Maybe<Scalars['String']>;
   client_name?: Maybe<Scalars['String']>;
   client_phone?: Maybe<Scalars['String']>;
+  comment?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "orders" */
+export type Orders_Max_Order_By = {
+  client_address?: InputMaybe<Order_By>;
+  client_name?: InputMaybe<Order_By>;
+  client_phone?: InputMaybe<Order_By>;
+  comment?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** columns and relationships of "orders_menu" */
 export type Orders_Menu = {
   __typename?: 'orders_menu';
+  amount: Scalars['numeric'];
   id: Scalars['uuid'];
   /** An object relationship */
   item?: Maybe<Menu>;
@@ -1760,9 +1905,17 @@ export type Orders_Menu_Aggregate = {
 /** aggregate fields of "orders_menu" */
 export type Orders_Menu_Aggregate_Fields = {
   __typename?: 'orders_menu_aggregate_fields';
+  avg?: Maybe<Orders_Menu_Avg_Fields>;
   count: Scalars['Int'];
   max?: Maybe<Orders_Menu_Max_Fields>;
   min?: Maybe<Orders_Menu_Min_Fields>;
+  stddev?: Maybe<Orders_Menu_Stddev_Fields>;
+  stddev_pop?: Maybe<Orders_Menu_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Orders_Menu_Stddev_Samp_Fields>;
+  sum?: Maybe<Orders_Menu_Sum_Fields>;
+  var_pop?: Maybe<Orders_Menu_Var_Pop_Fields>;
+  var_samp?: Maybe<Orders_Menu_Var_Samp_Fields>;
+  variance?: Maybe<Orders_Menu_Variance_Fields>;
 };
 
 
@@ -1774,9 +1927,17 @@ export type Orders_Menu_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "orders_menu" */
 export type Orders_Menu_Aggregate_Order_By = {
+  avg?: InputMaybe<Orders_Menu_Avg_Order_By>;
   count?: InputMaybe<Order_By>;
   max?: InputMaybe<Orders_Menu_Max_Order_By>;
   min?: InputMaybe<Orders_Menu_Min_Order_By>;
+  stddev?: InputMaybe<Orders_Menu_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<Orders_Menu_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<Orders_Menu_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<Orders_Menu_Sum_Order_By>;
+  var_pop?: InputMaybe<Orders_Menu_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<Orders_Menu_Var_Samp_Order_By>;
+  variance?: InputMaybe<Orders_Menu_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "orders_menu" */
@@ -1786,11 +1947,23 @@ export type Orders_Menu_Arr_Rel_Insert_Input = {
   on_conflict?: InputMaybe<Orders_Menu_On_Conflict>;
 };
 
+/** aggregate avg on columns */
+export type Orders_Menu_Avg_Fields = {
+  __typename?: 'orders_menu_avg_fields';
+  amount?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "orders_menu" */
+export type Orders_Menu_Avg_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "orders_menu". All fields are combined with a logical 'AND'. */
 export type Orders_Menu_Bool_Exp = {
   _and?: InputMaybe<Array<Orders_Menu_Bool_Exp>>;
   _not?: InputMaybe<Orders_Menu_Bool_Exp>;
   _or?: InputMaybe<Array<Orders_Menu_Bool_Exp>>;
+  amount?: InputMaybe<Numeric_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   item?: InputMaybe<Menu_Bool_Exp>;
   menu_id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -1803,8 +1976,14 @@ export enum Orders_Menu_Constraint {
   OrdersMenuPkey = 'orders_menu_pkey'
 }
 
+/** input type for incrementing numeric columns in table "orders_menu" */
+export type Orders_Menu_Inc_Input = {
+  amount?: InputMaybe<Scalars['numeric']>;
+};
+
 /** input type for inserting data into table "orders_menu" */
 export type Orders_Menu_Insert_Input = {
+  amount?: InputMaybe<Scalars['numeric']>;
   id?: InputMaybe<Scalars['uuid']>;
   item?: InputMaybe<Menu_Obj_Rel_Insert_Input>;
   menu_id?: InputMaybe<Scalars['uuid']>;
@@ -1814,6 +1993,7 @@ export type Orders_Menu_Insert_Input = {
 /** aggregate max on columns */
 export type Orders_Menu_Max_Fields = {
   __typename?: 'orders_menu_max_fields';
+  amount?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['uuid']>;
   menu_id?: Maybe<Scalars['uuid']>;
   order_id?: Maybe<Scalars['uuid']>;
@@ -1821,6 +2001,7 @@ export type Orders_Menu_Max_Fields = {
 
 /** order by max() on columns of table "orders_menu" */
 export type Orders_Menu_Max_Order_By = {
+  amount?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   menu_id?: InputMaybe<Order_By>;
   order_id?: InputMaybe<Order_By>;
@@ -1829,6 +2010,7 @@ export type Orders_Menu_Max_Order_By = {
 /** aggregate min on columns */
 export type Orders_Menu_Min_Fields = {
   __typename?: 'orders_menu_min_fields';
+  amount?: Maybe<Scalars['numeric']>;
   id?: Maybe<Scalars['uuid']>;
   menu_id?: Maybe<Scalars['uuid']>;
   order_id?: Maybe<Scalars['uuid']>;
@@ -1836,6 +2018,7 @@ export type Orders_Menu_Min_Fields = {
 
 /** order by min() on columns of table "orders_menu" */
 export type Orders_Menu_Min_Order_By = {
+  amount?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   menu_id?: InputMaybe<Order_By>;
   order_id?: InputMaybe<Order_By>;
@@ -1859,6 +2042,7 @@ export type Orders_Menu_On_Conflict = {
 
 /** Ordering options when selecting data from "orders_menu". */
 export type Orders_Menu_Order_By = {
+  amount?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   item?: InputMaybe<Menu_Order_By>;
   menu_id?: InputMaybe<Order_By>;
@@ -1873,6 +2057,8 @@ export type Orders_Menu_Pk_Columns_Input = {
 /** select columns of table "orders_menu" */
 export enum Orders_Menu_Select_Column {
   /** column name */
+  Amount = 'amount',
+  /** column name */
   Id = 'id',
   /** column name */
   MenuId = 'menu_id',
@@ -1882,13 +2068,60 @@ export enum Orders_Menu_Select_Column {
 
 /** input type for updating data in table "orders_menu" */
 export type Orders_Menu_Set_Input = {
+  amount?: InputMaybe<Scalars['numeric']>;
   id?: InputMaybe<Scalars['uuid']>;
   menu_id?: InputMaybe<Scalars['uuid']>;
   order_id?: InputMaybe<Scalars['uuid']>;
 };
 
+/** aggregate stddev on columns */
+export type Orders_Menu_Stddev_Fields = {
+  __typename?: 'orders_menu_stddev_fields';
+  amount?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "orders_menu" */
+export type Orders_Menu_Stddev_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Orders_Menu_Stddev_Pop_Fields = {
+  __typename?: 'orders_menu_stddev_pop_fields';
+  amount?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "orders_menu" */
+export type Orders_Menu_Stddev_Pop_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Orders_Menu_Stddev_Samp_Fields = {
+  __typename?: 'orders_menu_stddev_samp_fields';
+  amount?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "orders_menu" */
+export type Orders_Menu_Stddev_Samp_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Orders_Menu_Sum_Fields = {
+  __typename?: 'orders_menu_sum_fields';
+  amount?: Maybe<Scalars['numeric']>;
+};
+
+/** order by sum() on columns of table "orders_menu" */
+export type Orders_Menu_Sum_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
 /** update columns of table "orders_menu" */
 export enum Orders_Menu_Update_Column {
+  /** column name */
+  Amount = 'amount',
   /** column name */
   Id = 'id',
   /** column name */
@@ -1897,14 +2130,58 @@ export enum Orders_Menu_Update_Column {
   OrderId = 'order_id'
 }
 
+/** aggregate var_pop on columns */
+export type Orders_Menu_Var_Pop_Fields = {
+  __typename?: 'orders_menu_var_pop_fields';
+  amount?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "orders_menu" */
+export type Orders_Menu_Var_Pop_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Orders_Menu_Var_Samp_Fields = {
+  __typename?: 'orders_menu_var_samp_fields';
+  amount?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "orders_menu" */
+export type Orders_Menu_Var_Samp_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Orders_Menu_Variance_Fields = {
+  __typename?: 'orders_menu_variance_fields';
+  amount?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "orders_menu" */
+export type Orders_Menu_Variance_Order_By = {
+  amount?: InputMaybe<Order_By>;
+};
+
 /** aggregate min on columns */
 export type Orders_Min_Fields = {
   __typename?: 'orders_min_fields';
   client_address?: Maybe<Scalars['String']>;
   client_name?: Maybe<Scalars['String']>;
   client_phone?: Maybe<Scalars['String']>;
+  comment?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "orders" */
+export type Orders_Min_Order_By = {
+  client_address?: InputMaybe<Order_By>;
+  client_name?: InputMaybe<Order_By>;
+  client_phone?: InputMaybe<Order_By>;
+  comment?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
 };
 
 /** response of any mutation on the table "orders" */
@@ -1928,9 +2205,12 @@ export type Orders_Order_By = {
   client_address?: InputMaybe<Order_By>;
   client_name?: InputMaybe<Order_By>;
   client_phone?: InputMaybe<Order_By>;
+  comment?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  customer?: InputMaybe<Customers_Order_By>;
   id?: InputMaybe<Order_By>;
   order_items_aggregate?: InputMaybe<Orders_Menu_Aggregate_Order_By>;
+  payment_type?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   sum?: InputMaybe<Order_By>;
 };
@@ -1949,9 +2229,13 @@ export enum Orders_Select_Column {
   /** column name */
   ClientPhone = 'client_phone',
   /** column name */
+  Comment = 'comment',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Id = 'id',
+  /** column name */
+  PaymentType = 'payment_type',
   /** column name */
   Status = 'status'
 }
@@ -1961,8 +2245,10 @@ export type Orders_Set_Input = {
   client_address?: InputMaybe<Scalars['String']>;
   client_name?: InputMaybe<Scalars['String']>;
   client_phone?: InputMaybe<Scalars['String']>;
+  comment?: InputMaybe<Scalars['String']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['uuid']>;
+  payment_type?: InputMaybe<Payment_Types_Enum>;
   status?: InputMaybe<Order_Status_Enum>;
 };
 
@@ -1975,11 +2261,144 @@ export enum Orders_Update_Column {
   /** column name */
   ClientPhone = 'client_phone',
   /** column name */
+  Comment = 'comment',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Id = 'id',
   /** column name */
+  PaymentType = 'payment_type',
+  /** column name */
   Status = 'status'
+}
+
+/** columns and relationships of "payment_types" */
+export type Payment_Types = {
+  __typename?: 'payment_types';
+  id: Scalars['String'];
+  label: Scalars['String'];
+};
+
+/** aggregated selection of "payment_types" */
+export type Payment_Types_Aggregate = {
+  __typename?: 'payment_types_aggregate';
+  aggregate?: Maybe<Payment_Types_Aggregate_Fields>;
+  nodes: Array<Payment_Types>;
+};
+
+/** aggregate fields of "payment_types" */
+export type Payment_Types_Aggregate_Fields = {
+  __typename?: 'payment_types_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Payment_Types_Max_Fields>;
+  min?: Maybe<Payment_Types_Min_Fields>;
+};
+
+
+/** aggregate fields of "payment_types" */
+export type Payment_Types_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Payment_Types_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "payment_types". All fields are combined with a logical 'AND'. */
+export type Payment_Types_Bool_Exp = {
+  _and?: InputMaybe<Array<Payment_Types_Bool_Exp>>;
+  _not?: InputMaybe<Payment_Types_Bool_Exp>;
+  _or?: InputMaybe<Array<Payment_Types_Bool_Exp>>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  label?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "payment_types" */
+export enum Payment_Types_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  PaymentTypesPkey = 'payment_types_pkey'
+}
+
+export enum Payment_Types_Enum {
+  /** Картка */
+  Card = 'CARD',
+  /** Готівка */
+  Cash = 'CASH'
+}
+
+/** Boolean expression to compare columns of type "payment_types_enum". All fields are combined with logical 'AND'. */
+export type Payment_Types_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Payment_Types_Enum>;
+  _in?: InputMaybe<Array<Payment_Types_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<Payment_Types_Enum>;
+  _nin?: InputMaybe<Array<Payment_Types_Enum>>;
+};
+
+/** input type for inserting data into table "payment_types" */
+export type Payment_Types_Insert_Input = {
+  id?: InputMaybe<Scalars['String']>;
+  label?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Payment_Types_Max_Fields = {
+  __typename?: 'payment_types_max_fields';
+  id?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Payment_Types_Min_Fields = {
+  __typename?: 'payment_types_min_fields';
+  id?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "payment_types" */
+export type Payment_Types_Mutation_Response = {
+  __typename?: 'payment_types_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Payment_Types>;
+};
+
+/** on_conflict condition type for table "payment_types" */
+export type Payment_Types_On_Conflict = {
+  constraint: Payment_Types_Constraint;
+  update_columns?: Array<Payment_Types_Update_Column>;
+  where?: InputMaybe<Payment_Types_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "payment_types". */
+export type Payment_Types_Order_By = {
+  id?: InputMaybe<Order_By>;
+  label?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: payment_types */
+export type Payment_Types_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "payment_types" */
+export enum Payment_Types_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Label = 'label'
+}
+
+/** input type for updating data in table "payment_types" */
+export type Payment_Types_Set_Input = {
+  id?: InputMaybe<Scalars['String']>;
+  label?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "payment_types" */
+export enum Payment_Types_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Label = 'label'
 }
 
 export type Query_Root = {
@@ -2026,9 +2445,9 @@ export type Query_Root = {
   order_status_aggregate: Order_Status_Aggregate;
   /** fetch data from the table: "order_status" using primary key columns */
   order_status_by_pk?: Maybe<Order_Status>;
-  /** fetch data from the table: "orders" */
+  /** An array relationship */
   orders: Array<Orders>;
-  /** fetch aggregated fields from the table: "orders" */
+  /** An aggregate relationship */
   orders_aggregate: Orders_Aggregate;
   /** fetch data from the table: "orders" using primary key columns */
   orders_by_pk?: Maybe<Orders>;
@@ -2038,6 +2457,12 @@ export type Query_Root = {
   orders_menu_aggregate: Orders_Menu_Aggregate;
   /** fetch data from the table: "orders_menu" using primary key columns */
   orders_menu_by_pk?: Maybe<Orders_Menu>;
+  /** fetch data from the table: "payment_types" */
+  payment_types: Array<Payment_Types>;
+  /** fetch aggregated fields from the table: "payment_types" */
+  payment_types_aggregate: Payment_Types_Aggregate;
+  /** fetch data from the table: "payment_types" using primary key columns */
+  payment_types_by_pk?: Maybe<Payment_Types>;
   /** fetch data from the table: "settings" */
   settings: Array<Settings>;
   /** fetch aggregated fields from the table: "settings" */
@@ -2241,6 +2666,29 @@ export type Query_RootOrders_Menu_By_PkArgs = {
 };
 
 
+export type Query_RootPayment_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Payment_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Payment_Types_Order_By>>;
+  where?: InputMaybe<Payment_Types_Bool_Exp>;
+};
+
+
+export type Query_RootPayment_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Payment_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Payment_Types_Order_By>>;
+  where?: InputMaybe<Payment_Types_Bool_Exp>;
+};
+
+
+export type Query_RootPayment_Types_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type Query_RootSettingsArgs = {
   distinct_on?: InputMaybe<Array<Settings_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2412,9 +2860,9 @@ export type Subscription_Root = {
   order_status_aggregate: Order_Status_Aggregate;
   /** fetch data from the table: "order_status" using primary key columns */
   order_status_by_pk?: Maybe<Order_Status>;
-  /** fetch data from the table: "orders" */
+  /** An array relationship */
   orders: Array<Orders>;
-  /** fetch aggregated fields from the table: "orders" */
+  /** An aggregate relationship */
   orders_aggregate: Orders_Aggregate;
   /** fetch data from the table: "orders" using primary key columns */
   orders_by_pk?: Maybe<Orders>;
@@ -2424,6 +2872,12 @@ export type Subscription_Root = {
   orders_menu_aggregate: Orders_Menu_Aggregate;
   /** fetch data from the table: "orders_menu" using primary key columns */
   orders_menu_by_pk?: Maybe<Orders_Menu>;
+  /** fetch data from the table: "payment_types" */
+  payment_types: Array<Payment_Types>;
+  /** fetch aggregated fields from the table: "payment_types" */
+  payment_types_aggregate: Payment_Types_Aggregate;
+  /** fetch data from the table: "payment_types" using primary key columns */
+  payment_types_by_pk?: Maybe<Payment_Types>;
   /** fetch data from the table: "settings" */
   settings: Array<Settings>;
   /** fetch aggregated fields from the table: "settings" */
@@ -2612,6 +3066,29 @@ export type Subscription_RootOrders_Menu_By_PkArgs = {
 };
 
 
+export type Subscription_RootPayment_TypesArgs = {
+  distinct_on?: InputMaybe<Array<Payment_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Payment_Types_Order_By>>;
+  where?: InputMaybe<Payment_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootPayment_Types_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Payment_Types_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Payment_Types_Order_By>>;
+  where?: InputMaybe<Payment_Types_Bool_Exp>;
+};
+
+
+export type Subscription_RootPayment_Types_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type Subscription_RootSettingsArgs = {
   distinct_on?: InputMaybe<Array<Settings_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -2659,6 +3136,18 @@ export type Uuid_Comparison_Exp = {
   _neq?: InputMaybe<Scalars['uuid']>;
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
+
+export type CreateOrderMutationVariables = Exact<{
+  client_address: Scalars['String'];
+  client_name: Scalars['String'];
+  client_phone: Scalars['String'];
+  items: Scalars['String'];
+  payment_type: Scalars['String'];
+  comment?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type CreateOrderMutation = { __typename?: 'mutation_root', createOrder?: { __typename?: 'CreateOrderOutput', id: string } | null };
 
 export type CustomerLoginQueryVariables = Exact<{
   phoneNumber: Scalars['String'];
@@ -2712,6 +3201,46 @@ export type UpdateCustomerDataMutationVariables = Exact<{
 export type UpdateCustomerDataMutation = { __typename?: 'mutation_root', update_customers_by_pk?: { __typename?: 'customers', address?: string | null, id: any, name?: string | null, phone: string } | null };
 
 
+export const CreateOrderDocument = gql`
+    mutation CreateOrder($client_address: String!, $client_name: String!, $client_phone: String!, $items: String!, $payment_type: String!, $comment: String = "") {
+  createOrder(
+    order: {client_address: $client_address, client_name: $client_name, client_phone: $client_phone, items: $items, payment_type: $payment_type, comment: $comment}
+  ) {
+    id
+  }
+}
+    `;
+export type CreateOrderMutationFn = Apollo.MutationFunction<CreateOrderMutation, CreateOrderMutationVariables>;
+
+/**
+ * __useCreateOrderMutation__
+ *
+ * To run a mutation, you first call `useCreateOrderMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateOrderMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createOrderMutation, { data, loading, error }] = useCreateOrderMutation({
+ *   variables: {
+ *      client_address: // value for 'client_address'
+ *      client_name: // value for 'client_name'
+ *      client_phone: // value for 'client_phone'
+ *      items: // value for 'items'
+ *      payment_type: // value for 'payment_type'
+ *      comment: // value for 'comment'
+ *   },
+ * });
+ */
+export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<CreateOrderMutation, CreateOrderMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CreateOrderDocument, options);
+      }
+export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
+export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
+export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
 export const CustomerLoginDocument = gql`
     query CustomerLogin($phoneNumber: String!) {
   customerLogin(input: {phoneNumber: $phoneNumber}) {

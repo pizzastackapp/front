@@ -1,6 +1,6 @@
 import { min3Symbols, phoneRegexp } from '@app/common/utils/regex';
-import { Customers } from '@app/core/types';
 import { UpdateInfoFormValues } from '@app/modules/user/components/update-info/update-info.types';
+import { FrontCustomer } from '@app/modules/user/types/user';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
@@ -23,7 +23,7 @@ const validationSchema = yup.object({
 });
 
 export const useUpdateInfoForm = (
-  initialValues?: Customers,
+  initialValues?: FrontCustomer,
   onSubmitCallback?: (values: UpdateInfoFormValues) => Promise<void>
 ) => {
   const {
