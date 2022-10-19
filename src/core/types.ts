@@ -3174,6 +3174,11 @@ export type GetCustomerDataQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetCustomerDataQuery = { __typename?: 'query_root', customers: Array<{ __typename?: 'customers', address?: string | null, id: any, name?: string | null, phone: string }> };
 
+export type GetCustomerOrdersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCustomerOrdersQuery = { __typename?: 'query_root', orders: Array<{ __typename?: 'orders', created_at: any, status: Order_Status_Enum, sum?: any | null, order_items: Array<{ __typename?: 'orders_menu', amount: any, item?: { __typename?: 'menu', title: string } | null }> }>, order_status: Array<{ __typename?: 'order_status', id: string, label: string }> };
+
 export type GetMenuQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -3385,6 +3390,52 @@ export function useGetCustomerDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOp
 export type GetCustomerDataQueryHookResult = ReturnType<typeof useGetCustomerDataQuery>;
 export type GetCustomerDataLazyQueryHookResult = ReturnType<typeof useGetCustomerDataLazyQuery>;
 export type GetCustomerDataQueryResult = Apollo.QueryResult<GetCustomerDataQuery, GetCustomerDataQueryVariables>;
+export const GetCustomerOrdersDocument = gql`
+    query GetCustomerOrders {
+  orders {
+    created_at
+    order_items {
+      amount
+      item {
+        title
+      }
+    }
+    status
+    sum
+  }
+  order_status {
+    id
+    label
+  }
+}
+    `;
+
+/**
+ * __useGetCustomerOrdersQuery__
+ *
+ * To run a query within a React component, call `useGetCustomerOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCustomerOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCustomerOrdersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetCustomerOrdersQuery(baseOptions?: Apollo.QueryHookOptions<GetCustomerOrdersQuery, GetCustomerOrdersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCustomerOrdersQuery, GetCustomerOrdersQueryVariables>(GetCustomerOrdersDocument, options);
+      }
+export function useGetCustomerOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCustomerOrdersQuery, GetCustomerOrdersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCustomerOrdersQuery, GetCustomerOrdersQueryVariables>(GetCustomerOrdersDocument, options);
+        }
+export type GetCustomerOrdersQueryHookResult = ReturnType<typeof useGetCustomerOrdersQuery>;
+export type GetCustomerOrdersLazyQueryHookResult = ReturnType<typeof useGetCustomerOrdersLazyQuery>;
+export type GetCustomerOrdersQueryResult = Apollo.QueryResult<GetCustomerOrdersQuery, GetCustomerOrdersQueryVariables>;
 export const GetMenuDocument = gql`
     query GetMenu {
   categories {

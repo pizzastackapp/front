@@ -4,6 +4,7 @@ export interface UpdateInfoProps {
   initialValues?: FrontCustomer;
   onSubmitCallback?: (values: UpdateInfoFormValues) => Promise<void>;
   isUpdating?: boolean;
+  isLoading?: boolean;
 }
 
 export interface UpdateInfoFormValues {

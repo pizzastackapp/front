@@ -1,0 +1,17 @@
+query GetCustomerOrders {
+  orders {
+    created_at
+    order_items {
+      amount
+      item {
+        title
+      }
+    }
+    status
+    sum
+  }
+  order_status {
+    id
+    label
+  }
+}
