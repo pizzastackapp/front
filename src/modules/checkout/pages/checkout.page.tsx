@@ -30,7 +30,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
       })
       .join(',');
 
-    await createOrderMutation({
+    const newOrder = await createOrderMutation({
       variables: {
         client_address: values.address,
         client_name: values.name,
@@ -41,7 +41,12 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
       },
     });
 
-    cleanCart();
+    // cleanCart();
+
+    if (newOrder.data?.createOrder?.checkout_url) {
+      window.location.href = newOrder.data?.createOrder?.checkout_url;
+      return;
+    }
 
     navigate('/checkout/thank-you', { replace: true });
   };

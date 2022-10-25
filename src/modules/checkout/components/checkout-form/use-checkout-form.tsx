@@ -20,7 +20,11 @@ const validation = yup.object({
   comment: yup.string().notRequired(),
   paymentType: yup
     .string()
-    .oneOf([Payment_Types_Enum.Card, Payment_Types_Enum.Cash]),
+    .oneOf([
+      Payment_Types_Enum.Card,
+      Payment_Types_Enum.Cash,
+      Payment_Types_Enum.Online,
+    ]),
 });
 
 export const useCheckoutForm = (options?: UseCheckoutFormOptions) => {

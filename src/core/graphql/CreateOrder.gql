@@ -17,5 +17,6 @@ mutation CreateOrder(
     }
   ) {
     id
+    checkout_url
   }
 }
