@@ -238,6 +238,20 @@ const mockData = {
         label: 'Відмінений',
       },
     ],
+    payment_status: [
+      {
+        id: 'PROCESSING',
+        label: 'Очікуємо оплати',
+      },
+      {
+        id: 'SUCCEEDED',
+        label: 'Оплачено',
+      },
+      {
+        id: 'FAILED',
+        label: 'Оплату відмінено',
+      },
+    ],
   },
 };
 

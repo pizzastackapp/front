@@ -1,5 +1,5 @@
 query GetCustomerOrders {
-  orders {
+  orders(order_by: { created_at: desc }) {
     created_at
     order_items {
       amount
@@ -9,8 +9,13 @@ query GetCustomerOrders {
     }
     status
     sum
+    payment_status
   }
   order_status {
+    id
+    label
+  }
+  payment_status {
     id
     label
   }

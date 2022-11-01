@@ -10,7 +10,8 @@ import { FC } from 'react';
 
 interface UserOrdersTableProps {
   data: GetCustomerOrdersQuery['orders'];
-  orderStatus: any[];
+  orderStatus: GetCustomerOrdersQuery['order_status'];
+  paymentStatus: GetCustomerOrdersQuery['payment_status'];
 }
 
 const columnHelper = createColumnHelper<GetCustomerOrdersQuery['orders'][0]>();
@@ -18,6 +19,7 @@ const columnHelper = createColumnHelper<GetCustomerOrdersQuery['orders'][0]>();
 export const UserOrdersTable: FC<UserOrdersTableProps> = ({
   data,
   orderStatus,
+  paymentStatus,
 }) => {
   const columns = [
     columnHelper.accessor('created_at', {
@@ -43,6 +45,11 @@ export const UserOrdersTable: FC<UserOrdersTableProps> = ({
     columnHelper.accessor('sum', {
       header: 'Сума',
       cell: (info) => `${info.getValue()} грн.`,
+    }),
+    columnHelper.accessor('payment_status', {
+      header: 'Статус оплати',
+      cell: (info) =>
+        paymentStatus.find((st) => st.id === info.getValue())?.label,
     }),
   ];
 

@@ -1140,6 +1140,10 @@ export type Mutation_Root = {
   delete_orders_menu?: Maybe<Orders_Menu_Mutation_Response>;
   /** delete single row from the table: "orders_menu" */
   delete_orders_menu_by_pk?: Maybe<Orders_Menu>;
+  /** delete data from the table: "payment_status" */
+  delete_payment_status?: Maybe<Payment_Status_Mutation_Response>;
+  /** delete single row from the table: "payment_status" */
+  delete_payment_status_by_pk?: Maybe<Payment_Status>;
   /** delete data from the table: "payment_types" */
   delete_payment_types?: Maybe<Payment_Types_Mutation_Response>;
   /** delete single row from the table: "payment_types" */
@@ -1176,6 +1180,10 @@ export type Mutation_Root = {
   insert_orders_menu_one?: Maybe<Orders_Menu>;
   /** insert a single row into the table: "orders" */
   insert_orders_one?: Maybe<Orders>;
+  /** insert data into the table: "payment_status" */
+  insert_payment_status?: Maybe<Payment_Status_Mutation_Response>;
+  /** insert a single row into the table: "payment_status" */
+  insert_payment_status_one?: Maybe<Payment_Status>;
   /** insert data into the table: "payment_types" */
   insert_payment_types?: Maybe<Payment_Types_Mutation_Response>;
   /** insert a single row into the table: "payment_types" */
@@ -1212,6 +1220,10 @@ export type Mutation_Root = {
   update_orders_menu?: Maybe<Orders_Menu_Mutation_Response>;
   /** update single row of the table: "orders_menu" */
   update_orders_menu_by_pk?: Maybe<Orders_Menu>;
+  /** update data of the table: "payment_status" */
+  update_payment_status?: Maybe<Payment_Status_Mutation_Response>;
+  /** update single row of the table: "payment_status" */
+  update_payment_status_by_pk?: Maybe<Payment_Status>;
   /** update data of the table: "payment_types" */
   update_payment_types?: Maybe<Payment_Types_Mutation_Response>;
   /** update single row of the table: "payment_types" */
@@ -1316,6 +1328,18 @@ export type Mutation_RootDelete_Orders_MenuArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Orders_Menu_By_PkArgs = {
   id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Payment_StatusArgs = {
+  where: Payment_Status_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Payment_Status_By_PkArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -1438,6 +1462,20 @@ export type Mutation_RootInsert_Orders_Menu_OneArgs = {
 export type Mutation_RootInsert_Orders_OneArgs = {
   object: Orders_Insert_Input;
   on_conflict?: InputMaybe<Orders_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Payment_StatusArgs = {
+  objects: Array<Payment_Status_Insert_Input>;
+  on_conflict?: InputMaybe<Payment_Status_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Payment_Status_OneArgs = {
+  object: Payment_Status_Insert_Input;
+  on_conflict?: InputMaybe<Payment_Status_On_Conflict>;
 };
 
 
@@ -1570,6 +1608,20 @@ export type Mutation_RootUpdate_Orders_Menu_By_PkArgs = {
   _inc?: InputMaybe<Orders_Menu_Inc_Input>;
   _set?: InputMaybe<Orders_Menu_Set_Input>;
   pk_columns: Orders_Menu_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Payment_StatusArgs = {
+  _set?: InputMaybe<Payment_Status_Set_Input>;
+  where: Payment_Status_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Payment_Status_By_PkArgs = {
+  _set?: InputMaybe<Payment_Status_Set_Input>;
+  pk_columns: Payment_Status_Pk_Columns_Input;
 };
 
 
@@ -1780,6 +1832,7 @@ export type Orders = {
   /** An aggregate relationship */
   order_items_aggregate: Orders_Menu_Aggregate;
   payment_id?: Maybe<Scalars['Int']>;
+  payment_status?: Maybe<Payment_Status_Enum>;
   payment_type: Payment_Types_Enum;
   status: Order_Status_Enum;
   /** A computed field, executes function "sum_by_order" */
@@ -1883,6 +1936,7 @@ export type Orders_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   order_items?: InputMaybe<Orders_Menu_Bool_Exp>;
   payment_id?: InputMaybe<Int_Comparison_Exp>;
+  payment_status?: InputMaybe<Payment_Status_Enum_Comparison_Exp>;
   payment_type?: InputMaybe<Payment_Types_Enum_Comparison_Exp>;
   status?: InputMaybe<Order_Status_Enum_Comparison_Exp>;
   sum?: InputMaybe<Numeric_Comparison_Exp>;
@@ -1910,6 +1964,7 @@ export type Orders_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>;
   order_items?: InputMaybe<Orders_Menu_Arr_Rel_Insert_Input>;
   payment_id?: InputMaybe<Scalars['Int']>;
+  payment_status?: InputMaybe<Payment_Status_Enum>;
   payment_type?: InputMaybe<Payment_Types_Enum>;
   status?: InputMaybe<Order_Status_Enum>;
 };
@@ -2278,6 +2333,7 @@ export type Orders_Order_By = {
   id?: InputMaybe<Order_By>;
   order_items_aggregate?: InputMaybe<Orders_Menu_Aggregate_Order_By>;
   payment_id?: InputMaybe<Order_By>;
+  payment_status?: InputMaybe<Order_By>;
   payment_type?: InputMaybe<Order_By>;
   status?: InputMaybe<Order_By>;
   sum?: InputMaybe<Order_By>;
@@ -2305,6 +2361,8 @@ export enum Orders_Select_Column {
   /** column name */
   PaymentId = 'payment_id',
   /** column name */
+  PaymentStatus = 'payment_status',
+  /** column name */
   PaymentType = 'payment_type',
   /** column name */
   Status = 'status'
@@ -2319,6 +2377,7 @@ export type Orders_Set_Input = {
   created_at?: InputMaybe<Scalars['timestamptz']>;
   id?: InputMaybe<Scalars['uuid']>;
   payment_id?: InputMaybe<Scalars['Int']>;
+  payment_status?: InputMaybe<Payment_Status_Enum>;
   payment_type?: InputMaybe<Payment_Types_Enum>;
   status?: InputMaybe<Order_Status_Enum>;
 };
@@ -2384,6 +2443,8 @@ export enum Orders_Update_Column {
   /** column name */
   PaymentId = 'payment_id',
   /** column name */
+  PaymentStatus = 'payment_status',
+  /** column name */
   PaymentType = 'payment_type',
   /** column name */
   Status = 'status'
@@ -2421,6 +2482,137 @@ export type Orders_Variance_Fields = {
 export type Orders_Variance_Order_By = {
   payment_id?: InputMaybe<Order_By>;
 };
+
+/** columns and relationships of "payment_status" */
+export type Payment_Status = {
+  __typename?: 'payment_status';
+  id: Scalars['String'];
+  label: Scalars['String'];
+};
+
+/** aggregated selection of "payment_status" */
+export type Payment_Status_Aggregate = {
+  __typename?: 'payment_status_aggregate';
+  aggregate?: Maybe<Payment_Status_Aggregate_Fields>;
+  nodes: Array<Payment_Status>;
+};
+
+/** aggregate fields of "payment_status" */
+export type Payment_Status_Aggregate_Fields = {
+  __typename?: 'payment_status_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Payment_Status_Max_Fields>;
+  min?: Maybe<Payment_Status_Min_Fields>;
+};
+
+
+/** aggregate fields of "payment_status" */
+export type Payment_Status_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Payment_Status_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "payment_status". All fields are combined with a logical 'AND'. */
+export type Payment_Status_Bool_Exp = {
+  _and?: InputMaybe<Array<Payment_Status_Bool_Exp>>;
+  _not?: InputMaybe<Payment_Status_Bool_Exp>;
+  _or?: InputMaybe<Array<Payment_Status_Bool_Exp>>;
+  id?: InputMaybe<String_Comparison_Exp>;
+  label?: InputMaybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "payment_status" */
+export enum Payment_Status_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  PaymentStatusPkey = 'payment_status_pkey'
+}
+
+export enum Payment_Status_Enum {
+  /** Оплату відмінено */
+  Failed = 'FAILED',
+  /** Очікуємо оплати */
+  Processing = 'PROCESSING',
+  /** Оплачено */
+  Succeeded = 'SUCCEEDED'
+}
+
+/** Boolean expression to compare columns of type "payment_status_enum". All fields are combined with logical 'AND'. */
+export type Payment_Status_Enum_Comparison_Exp = {
+  _eq?: InputMaybe<Payment_Status_Enum>;
+  _in?: InputMaybe<Array<Payment_Status_Enum>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _neq?: InputMaybe<Payment_Status_Enum>;
+  _nin?: InputMaybe<Array<Payment_Status_Enum>>;
+};
+
+/** input type for inserting data into table "payment_status" */
+export type Payment_Status_Insert_Input = {
+  id?: InputMaybe<Scalars['String']>;
+  label?: InputMaybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Payment_Status_Max_Fields = {
+  __typename?: 'payment_status_max_fields';
+  id?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Payment_Status_Min_Fields = {
+  __typename?: 'payment_status_min_fields';
+  id?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "payment_status" */
+export type Payment_Status_Mutation_Response = {
+  __typename?: 'payment_status_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Payment_Status>;
+};
+
+/** on_conflict condition type for table "payment_status" */
+export type Payment_Status_On_Conflict = {
+  constraint: Payment_Status_Constraint;
+  update_columns?: Array<Payment_Status_Update_Column>;
+  where?: InputMaybe<Payment_Status_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "payment_status". */
+export type Payment_Status_Order_By = {
+  id?: InputMaybe<Order_By>;
+  label?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: payment_status */
+export type Payment_Status_Pk_Columns_Input = {
+  id: Scalars['String'];
+};
+
+/** select columns of table "payment_status" */
+export enum Payment_Status_Select_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Label = 'label'
+}
+
+/** input type for updating data in table "payment_status" */
+export type Payment_Status_Set_Input = {
+  id?: InputMaybe<Scalars['String']>;
+  label?: InputMaybe<Scalars['String']>;
+};
+
+/** update columns of table "payment_status" */
+export enum Payment_Status_Update_Column {
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Label = 'label'
+}
 
 /** columns and relationships of "payment_types" */
 export type Payment_Types = {
@@ -2609,6 +2801,12 @@ export type Query_Root = {
   orders_menu_aggregate: Orders_Menu_Aggregate;
   /** fetch data from the table: "orders_menu" using primary key columns */
   orders_menu_by_pk?: Maybe<Orders_Menu>;
+  /** fetch data from the table: "payment_status" */
+  payment_status: Array<Payment_Status>;
+  /** fetch aggregated fields from the table: "payment_status" */
+  payment_status_aggregate: Payment_Status_Aggregate;
+  /** fetch data from the table: "payment_status" using primary key columns */
+  payment_status_by_pk?: Maybe<Payment_Status>;
   /** fetch data from the table: "payment_types" */
   payment_types: Array<Payment_Types>;
   /** fetch aggregated fields from the table: "payment_types" */
@@ -2818,6 +3016,29 @@ export type Query_RootOrders_Menu_By_PkArgs = {
 };
 
 
+export type Query_RootPayment_StatusArgs = {
+  distinct_on?: InputMaybe<Array<Payment_Status_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Payment_Status_Order_By>>;
+  where?: InputMaybe<Payment_Status_Bool_Exp>;
+};
+
+
+export type Query_RootPayment_Status_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Payment_Status_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Payment_Status_Order_By>>;
+  where?: InputMaybe<Payment_Status_Bool_Exp>;
+};
+
+
+export type Query_RootPayment_Status_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type Query_RootPayment_TypesArgs = {
   distinct_on?: InputMaybe<Array<Payment_Types_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -3024,6 +3245,12 @@ export type Subscription_Root = {
   orders_menu_aggregate: Orders_Menu_Aggregate;
   /** fetch data from the table: "orders_menu" using primary key columns */
   orders_menu_by_pk?: Maybe<Orders_Menu>;
+  /** fetch data from the table: "payment_status" */
+  payment_status: Array<Payment_Status>;
+  /** fetch aggregated fields from the table: "payment_status" */
+  payment_status_aggregate: Payment_Status_Aggregate;
+  /** fetch data from the table: "payment_status" using primary key columns */
+  payment_status_by_pk?: Maybe<Payment_Status>;
   /** fetch data from the table: "payment_types" */
   payment_types: Array<Payment_Types>;
   /** fetch aggregated fields from the table: "payment_types" */
@@ -3218,6 +3445,29 @@ export type Subscription_RootOrders_Menu_By_PkArgs = {
 };
 
 
+export type Subscription_RootPayment_StatusArgs = {
+  distinct_on?: InputMaybe<Array<Payment_Status_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Payment_Status_Order_By>>;
+  where?: InputMaybe<Payment_Status_Bool_Exp>;
+};
+
+
+export type Subscription_RootPayment_Status_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Payment_Status_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Payment_Status_Order_By>>;
+  where?: InputMaybe<Payment_Status_Bool_Exp>;
+};
+
+
+export type Subscription_RootPayment_Status_By_PkArgs = {
+  id: Scalars['String'];
+};
+
+
 export type Subscription_RootPayment_TypesArgs = {
   distinct_on?: InputMaybe<Array<Payment_Types_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -3329,7 +3579,7 @@ export type GetCustomerDataQuery = { __typename?: 'query_root', customers: Array
 export type GetCustomerOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetCustomerOrdersQuery = { __typename?: 'query_root', orders: Array<{ __typename?: 'orders', created_at: any, status: Order_Status_Enum, sum?: any | null, order_items: Array<{ __typename?: 'orders_menu', amount: any, item?: { __typename?: 'menu', title: string } | null }> }>, order_status: Array<{ __typename?: 'order_status', id: string, label: string }> };
+export type GetCustomerOrdersQuery = { __typename?: 'query_root', orders: Array<{ __typename?: 'orders', created_at: any, status: Order_Status_Enum, sum?: any | null, payment_status?: Payment_Status_Enum | null, order_items: Array<{ __typename?: 'orders_menu', amount: any, item?: { __typename?: 'menu', title: string } | null }> }>, order_status: Array<{ __typename?: 'order_status', id: string, label: string }>, payment_status: Array<{ __typename?: 'payment_status', id: string, label: string }> };
 
 export type GetMenuQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3545,7 +3795,7 @@ export type GetCustomerDataLazyQueryHookResult = ReturnType<typeof useGetCustome
 export type GetCustomerDataQueryResult = Apollo.QueryResult<GetCustomerDataQuery, GetCustomerDataQueryVariables>;
 export const GetCustomerOrdersDocument = gql`
     query GetCustomerOrders {
-  orders {
+  orders(order_by: {created_at: desc}) {
     created_at
     order_items {
       amount
@@ -3555,8 +3805,13 @@ export const GetCustomerOrdersDocument = gql`
     }
     status
     sum
+    payment_status
   }
   order_status {
+    id
+    label
+  }
+  payment_status {
     id
     label
   }
