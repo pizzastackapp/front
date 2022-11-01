@@ -41,7 +41,7 @@ export const CheckoutPage: FC<CheckoutPageProps> = () => {
       },
     });
 
-    // cleanCart();
+    cleanCart();
 
     if (newOrder.data?.createOrder?.checkout_url) {
       window.location.href = newOrder.data?.createOrder?.checkout_url;
