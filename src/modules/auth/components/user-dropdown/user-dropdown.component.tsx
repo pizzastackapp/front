@@ -1,7 +1,7 @@
 import { ReactComponent as UserSolidIcon } from '@app/assets/icons/user-solid.svg';
 import { useOnClickOutside } from '@app/common/hooks/use-on-click-outside.hook';
 import { UserDropdownLink } from '@app/modules/auth/components/user-dropdown-link/user-dropdown-link.component';
-import { isLoggedInReactive } from '@app/modules/auth/store/reactive-vars';
+import { useAuthState } from '@app/modules/auth/hooks/use-auth-state';
 import { FC, useRef, useState } from 'react';
 
 interface UserDropdownProps {}
@@ -19,10 +19,10 @@ export const UserDropdown: FC<UserDropdownProps> = () => {
     toggleDropdownState();
   });
 
-  const logout = () => {
+  const { logout } = useAuthState();
+  const handleLogout = () => {
     toggleDropdownState();
-    localStorage.removeItem('jwt');
-    isLoggedInReactive(false);
+    logout();
   };
 
   return (
@@ -35,7 +35,7 @@ export const UserDropdown: FC<UserDropdownProps> = () => {
           <UserDropdownLink to="/profile" onClick={toggleDropdownState}>
             Ваш профіль
           </UserDropdownLink>
-          <UserDropdownLink onClick={logout}>Вийти</UserDropdownLink>
+          <UserDropdownLink onClick={handleLogout}>Вийти</UserDropdownLink>
         </div>
       )}
     </div>

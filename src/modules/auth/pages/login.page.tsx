@@ -4,12 +4,13 @@ import {
   useCustomerVerifyCodeLazyQuery,
 } from '@app/core/types';
 import { LoginForm } from '@app/modules/auth/components/login-form/login-form.component';
-import { isLoggedInReactive } from '@app/modules/auth/store/reactive-vars';
+import { useAuthState } from '@app/modules/auth/hooks/use-auth-state';
 import { Helmet } from 'react-helmet';
 import { useNavigate } from 'react-router-dom';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuthState();
 
   const [sendPhoneNumber] = useCustomerLoginLazyQuery({
     fetchPolicy: 'network-only',
@@ -32,12 +33,7 @@ export const LoginPage = () => {
     validateApolloResponse(queryResult);
 
     if (queryResult.data?.customerVerifyCode?.accessToken) {
-      localStorage.setItem(
-        'jwt',
-        queryResult.data?.customerVerifyCode?.accessToken
-      );
-
-      isLoggedInReactive(true);
+      login(queryResult.data.customerVerifyCode?.accessToken);
 
       navigate('/');
     }
