@@ -8,8 +8,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as ShoppingCartSolidIcon } from '@app/assets/icons/shopping-cart-solid.svg';
 import { toggleCart } from '@app/modules/cart/store/cart-opened-state';
 import { ReactComponent as Bars3Icon } from '@app/assets/icons/bars-3.svg';
-import clsx from 'clsx';
 import { useAuthState } from '@app/modules/auth/hooks/use-auth-state';
+import { MobileMenu } from '@app/common/components/mobile-menu/mobile-menu.component';
 
 interface HeaderProps {
   isLoading?: boolean;
@@ -17,7 +17,7 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
-  const { isLoggedin, logout } = useAuthState();
+  const { isLoggedin } = useAuthState();
 
   const location = useLocation();
   const isHomePage = location.pathname === '/';
@@ -26,19 +26,6 @@ export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
 
   const [isMenuOpened, setIsMenuOpened] = useState(false);
   const toggleMenuOpened = () => setIsMenuOpened((v) => !v);
-  const closeMenu = () => setIsMenuOpened(false);
-  const mobileMenuClasses = clsx(
-    'bg-white z-10 fixed w-full mt-12 h-full p-4 sm:hidden',
-    {
-      hidden: !isMenuOpened,
-      block: isMenuOpened,
-    }
-  );
-
-  const handleLogout = () => {
-    closeMenu();
-    logout();
-  };
 
   return (
     <>
@@ -92,51 +79,10 @@ export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
           )}
         </div>
       </div>
-      <div className={mobileMenuClasses}>
-        <ul>
-          <li>
-            <Link
-              to="/checkout"
-              onClick={closeMenu}
-              className="border-b w-full block py-2"
-            >
-              До корзини
-            </Link>
-          </li>
-          {isLoggedin ? (
-            <>
-              <li>
-                <Link
-                  to="/profile"
-                  onClick={closeMenu}
-                  className="border-b w-full block py-2"
-                >
-                  Ваш профіль
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/"
-                  onClick={handleLogout}
-                  className="border-b w-full block py-2"
-                >
-                  Вийти
-                </Link>
-              </li>
-            </>
-          ) : (
-            <li>
-              <Link
-                to="/login"
-                onClick={closeMenu}
-                className="border-b w-full block py-2"
-              >
-                Війти
-              </Link>
-            </li>
-          )}
-        </ul>
-      </div>
+      <MobileMenu
+        isMenuOpened={isMenuOpened}
+        setIsMenuOpened={setIsMenuOpened}
+      />
     </>
   );
 };
