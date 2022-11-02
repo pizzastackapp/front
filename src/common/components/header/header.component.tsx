@@ -1,16 +1,15 @@
-import { useReactiveVar } from '@apollo/client';
 import { Button } from '@app/common/components/button/button.component';
 import { HeaderCategoryLink } from '@app/common/components/link/link.component';
 import { Skeleton } from '@app/common/components/skeleton/skeleton.component';
 import { Categories } from '@app/core/types';
 import { UserDropdown } from '@app/modules/auth/components/user-dropdown/user-dropdown.component';
-import { isLoggedInReactive } from '@app/modules/auth/store/reactive-vars';
 import { FC, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as ShoppingCartSolidIcon } from '@app/assets/icons/shopping-cart-solid.svg';
 import { toggleCart } from '@app/modules/cart/store/cart-opened-state';
 import { ReactComponent as Bars3Icon } from '@app/assets/icons/bars-3.svg';
 import clsx from 'clsx';
+import { useAuthState } from '@app/modules/auth/hooks/use-auth-state';
 
 interface HeaderProps {
   isLoading?: boolean;
@@ -18,7 +17,7 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
-  const isLoggedin = useReactiveVar(isLoggedInReactive);
+  const { isLoggedin, logout } = useAuthState();
 
   const location = useLocation();
   const isHomePage = location.pathname === '/';
@@ -35,6 +34,11 @@ export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
       block: isMenuOpened,
     }
   );
+
+  const handleLogout = () => {
+    closeMenu();
+    logout();
+  };
 
   return (
     <>
@@ -108,6 +112,15 @@ export const Header: FC<HeaderProps> = ({ isLoading, categories }) => {
                   className="border-b w-full block py-2"
                 >
                   Ваш профіль
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/"
+                  onClick={handleLogout}
+                  className="border-b w-full block py-2"
+                >
+                  Вийти
                 </Link>
               </li>
             </>

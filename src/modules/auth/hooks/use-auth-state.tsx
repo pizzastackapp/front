@@ -1,3 +1,4 @@
+import { useReactiveVar } from '@apollo/client';
 import { isLoggedInReactive } from '@app/modules/auth/store/reactive-vars';
 import { useEffect } from 'react';
 
@@ -20,5 +21,7 @@ export const useAuthState = () => {
     isLoggedInReactive(true);
   };
 
-  return { logout, getToken, login };
+  const isLoggedin = useReactiveVar(isLoggedInReactive);
+
+  return { logout, getToken, login, isLoggedin };
 };
