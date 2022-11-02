@@ -49,7 +49,7 @@ export const LoginPage = () => {
         <title>Вхід</title>
       </Helmet>
       <div>
-        <h1 className="text-3xl font-bold text-center mb-12">
+        <h1 className="text-2xl sm:text-3xl font-bold text-center mb-12">
           Увійти до вашого кабінету 🍕 PizzaStack
         </h1>
         <LoginForm

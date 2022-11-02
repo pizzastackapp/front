@@ -8,6 +8,7 @@ interface InputProps {
   value?: ComponentProps<'input'>['value'];
   name?: ComponentProps<'input'>['name'];
   disabled?: ComponentProps<'input'>['disabled'];
+  type?: ComponentProps<'input'>['type'];
   label: string;
   placeholder: string;
   error?: string;

@@ -36,7 +36,7 @@ export const LoginForm: FC<LoginFormProps> = ({
   };
 
   return (
-    <div className="w-112 py-8 px-10 bg-white rounded-lg shadow mx-auto">
+    <div className="max-w-112 py-8 px-10 bg-white rounded-lg shadow mx-auto">
       <form onSubmit={onSubmit}>
         <div className="flex gap-2 flex-col">
           <Controller
@@ -49,6 +49,7 @@ export const LoginForm: FC<LoginFormProps> = ({
                 fullWidth
                 error={fieldState.error?.message}
                 disabled={step === LoginFormStep.second}
+                type="tel"
                 {...field}
               />
             )}
