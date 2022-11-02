@@ -60,34 +60,56 @@ export const UserOrdersTable: FC<UserOrdersTableProps> = ({
   });
 
   return (
-    <table className="w-full">
-      <thead className="bg-gray-50 border-t border-b border-gray-200 text-gray-900">
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th key={header.id} className="font-semibold py-2 px-6 text-left">
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext()
-                    )}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody className="bg-white text-gray-900 text-sm">
+    <>
+      <table className="w-full hidden sm:table">
+        <thead className="bg-gray-50 border-t border-b border-gray-200 text-gray-900">
+          {table.getHeaderGroups().map((headerGroup) => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map((header) => (
+                <th
+                  key={header.id}
+                  className="font-semibold py-2 px-6 text-left"
+                >
+                  {header.isPlaceholder
+                    ? null
+                    : flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody className="bg-white text-gray-900 text-sm">
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id} className="border-b border-gray-200">
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id} className="py-2 px-6">
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="px-6">
         {table.getRowModel().rows.map((row) => (
-          <tr key={row.id} className="border-b border-gray-200">
+          <ul
+            key={row.id}
+            className="border-b py-4 first-of-type:pt-0 last-of-type:border-0"
+          >
             {row.getVisibleCells().map((cell) => (
-              <td key={cell.id} className="py-2 px-6">
+              <li key={cell.id}>
+                <span className="font-bold">
+                  {cell.column.columnDef.header?.toString()}:
+                </span>{' '}
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
+              </li>
             ))}
-          </tr>
+          </ul>
         ))}
-      </tbody>
-    </table>
+      </div>
+    </>
   );
 };
