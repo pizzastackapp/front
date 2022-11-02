@@ -35,7 +35,7 @@ export const CartItem: FC<CartItemProps> = ({
 
   return (
     <div className="border-t border-gray-200 pt-6">
-      <div className="flex gap-6">
+      <div className="flex gap-6 flex-col sm:flex-row">
         <AdvancedImage
           cldImg={imageCld}
           width={128}
