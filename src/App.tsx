@@ -24,7 +24,7 @@ export const App = () => {
     <div className="flex flex-col min-h-screen">
       <Header isLoading={loading} categories={data?.categories} />
       <CartSidebar />
-      <div className="mx-12 my-24">
+      <div className="mx-6 sm:mx-12 my-20 sm:my-24">
         <Routes>
           <Route path="/" element={<MenuPage />} />
           <Route path="/login" element={<LoginPage />} />

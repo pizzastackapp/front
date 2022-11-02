@@ -31,7 +31,7 @@ export const MenuItem: FC<MenuItemProps> = ({
 
   const imageCld = useCloudinaryImage(image, transfomations);
 
-  const titleClasses = clsx('text-xl font-semibold', {
+  const titleClasses = clsx('text-lg sm:text-xl font-semibold', {
     'mb-2': ingredients,
     'mb-8': !ingredients,
   });
@@ -41,7 +41,7 @@ export const MenuItem: FC<MenuItemProps> = ({
   };
 
   return (
-    <div className="w-96 shadow-xl rounded-2xl bg-white">
+    <div className="w-72 lg:w-96 shadow-xl rounded-2xl bg-white flex flex-col">
       <div className="relative">
         <AdvancedImage
           cldImg={imageCld}
@@ -55,12 +55,14 @@ export const MenuItem: FC<MenuItemProps> = ({
           </span>
         )}
       </div>
-      <div className="p-8 flex flex-col justify-between h-[calc(100%_-_15rem)]">
+      <div className="p-4 sm:p-8 flex flex-col justify-between h-[calc(100%_-_15rem)] flex-1">
         <div>
           <h2 className={titleClasses}>{title}</h2>
-          {ingredients && <p className="mb-8">{ingredients}</p>}
+          {ingredients && (
+            <p className="mb-4 sm:mb-8 text-sm sm:text-base">{ingredients}</p>
+          )}
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center flex-col gap-3 sm:flex-row">
           <span className="text-xl font-semibold">{price} грн.</span>
           <Button onClick={handleAddToCart}>Додати до корзини</Button>
         </div>
