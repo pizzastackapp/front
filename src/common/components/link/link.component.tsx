@@ -1,14 +1,16 @@
 import { FC, PropsWithChildren } from 'react';
 
-interface LinkProps {
+interface HeaderCategoryLinkProps {
   url: string;
 }
 
-export const Link: FC<LinkProps & PropsWithChildren> = ({ url, children }) => {
+export const HeaderCategoryLink: FC<
+  PropsWithChildren<HeaderCategoryLinkProps>
+> = ({ url, children }) => {
   return (
     <a
       href={url}
-      className="relative font-semibold after:content-[''] after:block after:absolute after:w-full after:h-px hover:after:bg-amber-400"
+      className="relative font-semibold text-sm sm:text-base after:content-[''] after:block after:absolute after:w-full after:h-px hover:after:bg-amber-400"
     >
       {children}
     </a>

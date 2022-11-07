@@ -17,6 +17,7 @@ export const MenuList: FC<MenuListProps> = ({ items }) => {
           image={image}
           key={`pizza-${pizza.id}`}
           fitImage={pizza.category_id === settings?.settings[0].drinks_category}
+          pizzaId={pizza.id}
         />
       ))}
     </div>

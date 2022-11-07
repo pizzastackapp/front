@@ -1,0 +1,22 @@
+query GetCustomerOrders {
+  orders(order_by: { created_at: desc }) {
+    created_at
+    order_items {
+      amount
+      item {
+        title
+      }
+    }
+    status
+    sum
+    payment_status
+  }
+  order_status {
+    id
+    label
+  }
+  payment_status {
+    id
+    label
+  }
+}
