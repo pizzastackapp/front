@@ -93,7 +93,7 @@ export const UserOrdersTable: FC<UserOrdersTableProps> = ({
           ))}
         </tbody>
       </table>
-      <div className="px-6">
+      <div className="px-6 block sm:hidden">
         {table.getRowModel().rows.map((row) => (
           <ul
             key={row.id}
